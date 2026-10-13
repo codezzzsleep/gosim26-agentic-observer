@@ -43,7 +43,10 @@ GOSIM 2026 Agentic Observer Hackathon 参赛作品，队伍 cloudbrain，决赛�
 
 **数值规划器做出每一个动作；大模型读文字、做判断，答案经代码校验后只能在固定范围内调整规划；任何一环失败，巡天照常进行。**
 
-![决策流程：请求 → 状态更新 → 数值规划器 → 动作校验 → 动作；大模型环节和预算守卫在固定范围内调整规划器](assets/decision-loop.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/decision-loop-dark.png">
+  <img src="assets/decision-loop.png" alt="数值规划器做出每一个动作；四个大模型环节读文字、做判断，答案经代码校验后只在固定范围内调整规划；预算守卫控制搜索力度和最短曝光" width="100%">
+</picture>
 
 - **规划器**（`planner.py`）：每次决策对所有可见目标、20 种曝光时长计算收益，在约 30 个锚点周围各试几百个指向偏移，
   按评测引擎相同的几何把目标映射到光纤格子，选"总收益 − 时间价格 × 时长"最大的方案。时间价格来自赛季计划：
@@ -84,7 +87,10 @@ GOSIM 2026 Agentic Observer Hackathon 参赛作品，队伍 cloudbrain，决赛�
 隐藏卡看不到，公开卡又只有输入没有天气，本地无法打分。所以我们先搭了一个本地闭环实验环境（[`lab/`](lab/README.md)），
 再让每个改动走同一圈：
 
-![开发流程：改动依次经过 quick、tune、confirm 三层本地卡、上传前把关和平台评测，不低于当前最终版本才替换](assets/dev-loop.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/dev-loop-dark.png">
+  <img src="assets/dev-loop.png" alt="改动依次经过 quick、tune、confirm 三层本地卡、上传前把关和平台 3 次评测，不低于当前最终版本才替换，否则回到改动" width="100%">
+</picture>
 
 - **造卡。** 用官方公开的模拟器按种子生成带天气、事件和限时请求的本地卡：A–D 的真实目录配模拟天气，
   加上站点、季节、赛季长度、目标数、光纤布局、计分零点都随机的变体卡，模拟隐藏卡可能的样子。共 84 张，`test` 组 16 张封存到定版前才跑。
@@ -173,7 +179,7 @@ lab/                   本地闭环实验环境（默认测试上面的 agent/�
   tools/               造卡、跑分、配对比较、健康检查、上传前把关、假模型、单元测试、光纤时间分析
   cards/SETS.json      84 张本地卡的配方（卡本身由工具生成，不在仓库里）
   cards/CHECKSUMS.json 造出的卡的校验和
-assets/                README 里的流程图（PNG）及其 Mermaid 源文件
+assets/                README 里的流程图：浅色 / 深色 PNG 及其 SVG 源文件
 ```
 
 ## 文档
