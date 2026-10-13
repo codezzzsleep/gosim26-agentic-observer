@@ -1,0 +1,15 @@
+# keys
+.env
+**/.env
+# Python
+__pycache__/
+*.pyc
+.venv/
+.deps/
+# lab: official materials, generated cards, runs and builds are not part of this repository
+lab/hackathon-survey26/
+lab/cards/*/
+lab/runs/
+lab/build/
+lab/results/LEDGER.md
+*.zip

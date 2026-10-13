@@ -1,0 +1,29 @@
+{
+  "schema_version": "observer-project-v1",
+  "protocol": "jsonl-v4",
+  "image": "python:3.12-slim",
+  "build": [
+    [
+      "pip",
+      "install",
+      "--no-cache-dir",
+      "--target",
+      ".deps",
+      "-r",
+      "requirements.txt"
+    ]
+  ],
+  "run": [
+    "python3",
+    "-u",
+    "agent.py"
+  ],
+  "working_directory": ".",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/workspace/.deps",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

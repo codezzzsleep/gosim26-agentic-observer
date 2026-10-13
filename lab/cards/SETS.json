@@ -1,0 +1,597 @@
+{
+ "_comment": "Card recipes. tools/make_cards.py builds every card listed here; tools/bench.py and tools/exp.py accept set and group names. Add a set, run make_cards.py, done.",
+ "groups": {
+  "quick": [
+   "dev",
+   "prac_dev"
+  ],
+  "tune": [
+   "real_dev",
+   "var_dev"
+  ],
+  "confirm": [
+   "hold",
+   "prac_hold",
+   "real_hold",
+   "var_hold"
+  ],
+  "test": [
+   "real_test",
+   "var_test"
+  ]
+ },
+ "sets": {
+  "dev": [
+   {
+    "name": "d101",
+    "kind": "practice",
+    "seed": 101,
+    "tier": 1
+   },
+   {
+    "name": "d102",
+    "kind": "practice",
+    "seed": 102,
+    "tier": 2
+   },
+   {
+    "name": "d103",
+    "kind": "practice",
+    "seed": 103,
+    "tier": 3
+   },
+   {
+    "name": "d104",
+    "kind": "practice",
+    "seed": 104,
+    "tier": 4
+   },
+   {
+    "name": "d105",
+    "kind": "practice",
+    "seed": 105,
+    "tier": 1
+   },
+   {
+    "name": "d106",
+    "kind": "practice",
+    "seed": 106,
+    "tier": 2
+   },
+   {
+    "name": "d107",
+    "kind": "practice",
+    "seed": 107,
+    "tier": 3,
+    "fault_count": 2
+   },
+   {
+    "name": "d108",
+    "kind": "practice",
+    "seed": 108,
+    "tier": 4
+   }
+  ],
+  "hold": [
+   {
+    "name": "h201",
+    "kind": "practice",
+    "seed": 201,
+    "tier": 1
+   },
+   {
+    "name": "h202",
+    "kind": "practice",
+    "seed": 202,
+    "tier": 2
+   },
+   {
+    "name": "h203",
+    "kind": "practice",
+    "seed": 203,
+    "tier": 3
+   },
+   {
+    "name": "h204",
+    "kind": "practice",
+    "seed": 204,
+    "tier": 4
+   },
+   {
+    "name": "h205",
+    "kind": "practice",
+    "seed": 205,
+    "tier": 1
+   },
+   {
+    "name": "h206",
+    "kind": "practice",
+    "seed": 206,
+    "tier": 2
+   },
+   {
+    "name": "h207",
+    "kind": "practice",
+    "seed": 207,
+    "tier": 3,
+    "fault_count": 2
+   },
+   {
+    "name": "h208",
+    "kind": "practice",
+    "seed": 208,
+    "tier": 4
+   }
+  ],
+  "smoke": [
+   {
+    "name": "A8",
+    "kind": "real",
+    "src": "a",
+    "seed": 91,
+    "tier": 3,
+    "nights": 8,
+    "stress": "none"
+   },
+   {
+    "name": "B8",
+    "kind": "real",
+    "src": "b",
+    "seed": 92,
+    "tier": 3,
+    "nights": 8,
+    "stress": "none"
+   },
+   {
+    "name": "C8",
+    "kind": "real",
+    "src": "c",
+    "seed": 93,
+    "tier": 3,
+    "nights": 8,
+    "stress": "hard"
+   },
+   {
+    "name": "D8",
+    "kind": "real",
+    "src": "d",
+    "seed": 94,
+    "tier": 3,
+    "nights": 8,
+    "stress": "data_loss"
+   }
+  ],
+  "prac_dev": [
+   {
+    "name": "Pa1",
+    "kind": "real",
+    "src": "alpha",
+    "seed": 1,
+    "tier": 2,
+    "stress": "none"
+   },
+   {
+    "name": "Pb1",
+    "kind": "real",
+    "src": "beta",
+    "seed": 1,
+    "tier": 2,
+    "stress": "none"
+   },
+   {
+    "name": "Pg1",
+    "kind": "real",
+    "src": "gamma",
+    "seed": 1,
+    "tier": 2,
+    "stress": "data_loss"
+   },
+   {
+    "name": "Pd1",
+    "kind": "real",
+    "src": "delta",
+    "seed": 1,
+    "tier": 2,
+    "stress": "data_loss"
+   }
+  ],
+  "prac_hold": [
+   {
+    "name": "Pa2",
+    "kind": "real",
+    "src": "alpha",
+    "seed": 2,
+    "tier": 3,
+    "stress": "none"
+   },
+   {
+    "name": "Pb2",
+    "kind": "real",
+    "src": "beta",
+    "seed": 2,
+    "tier": 3,
+    "stress": "none"
+   },
+   {
+    "name": "Pg2",
+    "kind": "real",
+    "src": "gamma",
+    "seed": 2,
+    "tier": 3,
+    "stress": "data_loss"
+   },
+   {
+    "name": "Pd2",
+    "kind": "real",
+    "src": "delta",
+    "seed": 2,
+    "tier": 3,
+    "stress": "data_loss"
+   }
+  ],
+  "real_dev": [
+   {
+    "name": "A1",
+    "kind": "real",
+    "src": "a",
+    "seed": 1,
+    "tier": 2,
+    "stress": "none"
+   },
+   {
+    "name": "A2",
+    "kind": "real",
+    "src": "a",
+    "seed": 2,
+    "tier": 3,
+    "stress": "none"
+   },
+   {
+    "name": "B1",
+    "kind": "real",
+    "src": "b",
+    "seed": 1,
+    "tier": 2,
+    "stress": "none"
+   },
+   {
+    "name": "B2",
+    "kind": "real",
+    "src": "b",
+    "seed": 2,
+    "tier": 3,
+    "stress": "none"
+   },
+   {
+    "name": "C1",
+    "kind": "real",
+    "src": "c",
+    "seed": 1,
+    "tier": 2,
+    "stress": "none"
+   },
+   {
+    "name": "C2",
+    "kind": "real",
+    "src": "c",
+    "seed": 2,
+    "tier": 3,
+    "stress": "none"
+   },
+   {
+    "name": "D1",
+    "kind": "real",
+    "src": "d",
+    "seed": 1,
+    "tier": 2,
+    "stress": "data_loss"
+   },
+   {
+    "name": "D2",
+    "kind": "real",
+    "src": "d",
+    "seed": 2,
+    "tier": 3,
+    "stress": "data_loss"
+   }
+  ],
+  "real_hold": [
+   {
+    "name": "A3",
+    "kind": "real",
+    "src": "a",
+    "seed": 3,
+    "tier": 1,
+    "stress": "none"
+   },
+   {
+    "name": "A4",
+    "kind": "real",
+    "src": "a",
+    "seed": 4,
+    "tier": 4,
+    "stress": "none"
+   },
+   {
+    "name": "B3",
+    "kind": "real",
+    "src": "b",
+    "seed": 3,
+    "tier": 1,
+    "stress": "none"
+   },
+   {
+    "name": "B4",
+    "kind": "real",
+    "src": "b",
+    "seed": 4,
+    "tier": 4,
+    "stress": "none"
+   },
+   {
+    "name": "C3",
+    "kind": "real",
+    "src": "c",
+    "seed": 3,
+    "tier": 1,
+    "stress": "none"
+   },
+   {
+    "name": "C4",
+    "kind": "real",
+    "src": "c",
+    "seed": 4,
+    "tier": 4,
+    "stress": "none"
+   },
+   {
+    "name": "D3",
+    "kind": "real",
+    "src": "d",
+    "seed": 3,
+    "tier": 1,
+    "stress": "data_loss"
+   },
+   {
+    "name": "D4",
+    "kind": "real",
+    "src": "d",
+    "seed": 4,
+    "tier": 4,
+    "stress": "data_loss"
+   }
+  ],
+  "real_test": [
+   {
+    "name": "A5",
+    "kind": "real",
+    "src": "a",
+    "seed": 5,
+    "tier": 2,
+    "stress": "none"
+   },
+   {
+    "name": "A6",
+    "kind": "real",
+    "src": "a",
+    "seed": 6,
+    "tier": 3,
+    "stress": "none"
+   },
+   {
+    "name": "B5",
+    "kind": "real",
+    "src": "b",
+    "seed": 5,
+    "tier": 2,
+    "stress": "none"
+   },
+   {
+    "name": "B6",
+    "kind": "real",
+    "src": "b",
+    "seed": 6,
+    "tier": 3,
+    "stress": "none"
+   },
+   {
+    "name": "C5",
+    "kind": "real",
+    "src": "c",
+    "seed": 5,
+    "tier": 2,
+    "stress": "none"
+   },
+   {
+    "name": "C6",
+    "kind": "real",
+    "src": "c",
+    "seed": 6,
+    "tier": 3,
+    "stress": "none"
+   },
+   {
+    "name": "D5",
+    "kind": "real",
+    "src": "d",
+    "seed": 5,
+    "tier": 2,
+    "stress": "data_loss"
+   },
+   {
+    "name": "D6",
+    "kind": "real",
+    "src": "d",
+    "seed": 6,
+    "tier": 3,
+    "stress": "data_loss"
+   }
+  ],
+  "var_dev": [
+   {
+    "name": "v501",
+    "kind": "var",
+    "seed": 501
+   },
+   {
+    "name": "v502",
+    "kind": "var",
+    "seed": 502
+   },
+   {
+    "name": "v503",
+    "kind": "var",
+    "seed": 503
+   },
+   {
+    "name": "v504",
+    "kind": "var",
+    "seed": 504
+   },
+   {
+    "name": "v505",
+    "kind": "var",
+    "seed": 505
+   },
+   {
+    "name": "v506",
+    "kind": "var",
+    "seed": 506
+   },
+   {
+    "name": "v507",
+    "kind": "var",
+    "seed": 507
+   },
+   {
+    "name": "v508",
+    "kind": "var",
+    "seed": 508
+   },
+   {
+    "name": "v509",
+    "kind": "var",
+    "seed": 509
+   },
+   {
+    "name": "v510",
+    "kind": "var",
+    "seed": 510
+   },
+   {
+    "name": "v511",
+    "kind": "var",
+    "seed": 511
+   },
+   {
+    "name": "v512",
+    "kind": "var",
+    "seed": 512
+   }
+  ],
+  "var_hold": [
+   {
+    "name": "v601",
+    "kind": "var",
+    "seed": 601
+   },
+   {
+    "name": "v602",
+    "kind": "var",
+    "seed": 602
+   },
+   {
+    "name": "v603",
+    "kind": "var",
+    "seed": 603
+   },
+   {
+    "name": "v604",
+    "kind": "var",
+    "seed": 604
+   },
+   {
+    "name": "v605",
+    "kind": "var",
+    "seed": 605
+   },
+   {
+    "name": "v606",
+    "kind": "var",
+    "seed": 606
+   },
+   {
+    "name": "v607",
+    "kind": "var",
+    "seed": 607
+   },
+   {
+    "name": "v608",
+    "kind": "var",
+    "seed": 608
+   },
+   {
+    "name": "v609",
+    "kind": "var",
+    "seed": 609
+   },
+   {
+    "name": "v610",
+    "kind": "var",
+    "seed": 610
+   },
+   {
+    "name": "v611",
+    "kind": "var",
+    "seed": 611
+   },
+   {
+    "name": "v612",
+    "kind": "var",
+    "seed": 612
+   }
+  ],
+  "var_test": [
+   {
+    "name": "v701",
+    "kind": "var",
+    "seed": 701
+   },
+   {
+    "name": "v702",
+    "kind": "var",
+    "seed": 702
+   },
+   {
+    "name": "v703",
+    "kind": "var",
+    "seed": 703
+   },
+   {
+    "name": "v704",
+    "kind": "var",
+    "seed": 704
+   },
+   {
+    "name": "v705",
+    "kind": "var",
+    "seed": 705
+   },
+   {
+    "name": "v706",
+    "kind": "var",
+    "seed": 706
+   },
+   {
+    "name": "v707",
+    "kind": "var",
+    "seed": 707
+   },
+   {
+    "name": "v708",
+    "kind": "var",
+    "seed": 708
+   }
+  ]
+ }
+}
