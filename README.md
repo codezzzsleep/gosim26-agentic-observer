@@ -88,7 +88,17 @@ PYTHONPATH=.deps python3 <官方示例包>/runner/run_local.py --inherit-env \
 
 > GOSIM 2026 Agentic Observer Hackathon (https://create.gosim.org/survey26/)
 
-主办方将发布介绍本基准的正式文章，发布后请改为引用该文章（届时在此补上）。
+主办方将发布介绍本基准的正式文章，发布后请改为引用该文章（届时在此补上）：
+
+```bibtex
+@article{,
+  title   = {},
+  author  = {},
+  journal = {},
+  year    = {2026},
+  url     = {}
+}
+```
 
 ---
 
