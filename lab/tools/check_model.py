@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 """Try the three model stages once against the real model service, exactly as the agent calls them.
 
-    python3 tools/check_model.py --dir build/v1_llm
+    python3 tools/check_model.py                 # the submitted agent in ../agent
 
-The service comes from the environment or from a .env file in that folder (see .env.example there), e.g. for the
-organizers' local Kimi relay:
+The service comes from the environment or from a .env file in that folder (see .env.example there), e.g.
 
-    OPENAI_API_KEY=<your personal API token>
-    OPENAI_BASE_URL=<OpenAI-compatible base URL of the service>
-    OPENAI_MODEL=kimi-for-coding
-    AO_LLM_PREFIX=OPENAI
+    DEEPSEEK_API_KEY=<your key>
+    AO_LLM_PREFIX=DEEPSEEK
 
 It makes about five requests (one briefing, one fault verdict, one review with a few tool rounds), prints what
 came back and how long it took, and says PASS or FAIL per stage. The key is never printed.
 A stage that fails here would silently fall back to the rules during a run -- the run stays healthy, but that
-stage would not count as model-driven. Paste the output back if something fails.
+stage would not count as model-driven.
 """
 import argparse, os, sys, time
 from pathlib import Path
@@ -25,12 +22,12 @@ from lab import WORK
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--dir", default="build/v1_llm", help="assembled agent folder with the model stages")
+    ap.add_argument("--dir", default="../agent", help="agent folder with the model stages")
     ap.add_argument("--wait", type=float, default=120.0, help="longest wait per stage, seconds")
     a = ap.parse_args()
     folder = (Path(a.dir) if Path(a.dir).is_absolute() else WORK / a.dir).resolve()
     if not (folder / "llm.py").exists():
-        raise SystemExit(f"{folder} has no llm.py: build it first, e.g.  python3 tools/assemble.py --core baselines/v1 --llm --out build/v1_llm")
+        raise SystemExit(f"{folder} has no llm.py: point --dir at an agent folder with the model stages")
     sys.path.insert(0, str(folder))
     import llm, advisor
     llm.load_dotenv(str(folder / ".env"))

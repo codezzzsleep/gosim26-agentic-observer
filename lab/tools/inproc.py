@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run an agent in-process against a card with the official engine (fast iteration, profiling).
 
-    python3 tools/inproc.py --agent-dir agent --card d101 [--max-decisions N] [--profile] [--out runs/x]
+    python3 tools/inproc.py --agent-dir ../agent --card d101 [--max-decisions N] [--profile] [--out runs/x]
 """
 import os as _os
 from pathlib import Path as _Path
@@ -12,7 +12,7 @@ import argparse, cProfile, json, os, pstats, sys, time
 from pathlib import Path
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--agent-dir", default=str(WORK / "agent")); ap.add_argument("--card", required=True)
+ap.add_argument("--agent-dir", default=str(WORK.parent / "agent")); ap.add_argument("--card", required=True)
 ap.add_argument("--max-decisions", type=int, default=10**9); ap.add_argument("--profile", action="store_true")
 ap.add_argument("--out"); ap.add_argument("--quiet", action="store_true")
 a = ap.parse_args()

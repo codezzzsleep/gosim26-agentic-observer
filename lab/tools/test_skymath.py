@@ -4,7 +4,7 @@ WORK = _Path(_os.environ.get("AO_WORK", _Path(__file__).resolve().parents[1]))  
 REPO = _Path(_os.environ.get("SURVEY26_REPO", WORK / "hackathon-survey26"))           # the official repository
 
 import sys, random, math
-sys.path.insert(0, str(_Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else WORK / "agent")); sys.path.insert(0, str(REPO))      # optional argument: agent folder
+sys.path.insert(0, str(_Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else WORK.parent / "agent")); sys.path.insert(0, str(REPO))      # optional argument: agent folder
 import numpy as np
 from datetime import datetime, timezone, timedelta
 import skymath as sm

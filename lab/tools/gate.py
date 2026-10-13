@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-"""Pre-upload gate: build a submission and check everything that can be checked without the platform.
+"""Pre-upload gate: package an agent and check everything that can be checked without the platform.
 
-    python3 tools/gate.py --core baselines/v1 --llm --name v1_llm        # exact v1 core + model stages
-    python3 tools/gate.py --core agent --llm --name next_llm             # working core + model stages
-    python3 tools/gate.py --core agent --name next_rules                 # rules only
+    python3 tools/gate.py                                  # the submitted agent (../agent)
+    python3 tools/gate.py --agent build/try1 --name try1   # any other agent folder
 
 Steps (each prints PASS or FAIL; exit code 1 if anything failed):
-  1. build      assemble build/NAME and build/NAME.zip; read the zip back with the platform's package code; no secrets
-  2. unit       geometry against the official engine, sky tracker, (with --llm) the fault-verdict path
+  1. build      copy the folder to build/NAME, pack build/NAME.zip, read it back with the platform's package code, no secrets
+  2. unit       geometry against the official engine, sky tracker, (with model stages) the fault-verdict path
   3. smoke      the four short cards with real A-D catalogues, no model, CPU pacing on: must finish cleanly
-  4. same       (with --llm) model off: scores identical to the core alone, card by card
-  5. model      (with --llm) a local stand-in model in nine modes. In good / notools / texttool / reasoning / busy /
+  4. model      (with model stages) a local stand-in model in nine modes. In good / notools / texttool / reasoning / busy /
                 think the model's answers must really be applied (with and without native tool calling, rate-limited,
                 slow); in garbage / error / slow the run must stay healthy on the rules
 A passed gate says the package is safe to upload. It says nothing about the score: that is tools/exp.py.
@@ -19,7 +17,7 @@ import argparse, os, re, subprocess, sys, time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from lab import WORK, cards_of, load_summary, log_tail
+from lab import WORK, cards_of, log_tail
 from health import check_card
 
 TOOLS = WORK / "tools"
@@ -52,17 +50,18 @@ def healthy(tag, sets):
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--core", required=True); ap.add_argument("--llm", action="store_true"); ap.add_argument("--name", required=True)
+    ap.add_argument("--agent", default="../agent", help="agent folder (default: the submitted agent)")
+    ap.add_argument("--name", default="agent", help="build name: build/NAME and build/NAME.zip")
     ap.add_argument("--jobs", type=int, default=max(1, (os.cpu_count() or 2) - 2))
-    ap.add_argument("--skip", nargs="*", default=[], help="steps to skip: unit smoke same model")
+    ap.add_argument("--skip", nargs="*", default=[], help="steps to skip: unit smoke model")
     a = ap.parse_args()
-    core = (WORK / a.core).resolve()
+    agent = (WORK / a.agent).resolve() if not Path(a.agent).is_absolute() else Path(a.agent)
     out = WORK / "build" / a.name
+    has_model = (agent / "llm.py").exists() and (agent / "supervisor.py").exists()
     started = time.time()
 
     # 1. build
-    args = [TOOLS / "assemble.py", "--core", a.core, "--out", f"build/{a.name}", "--zip"] + (["--llm"] if a.llm else [])
-    if not step("build", call(args) == 0, f"build/{a.name}.zip"):
+    if not step("build", call([TOOLS / "package.py", "--agent", agent, "--out", out]) == 0, f"build/{a.name}.zip"):
         return 1
 
     # 2. unit tests
@@ -70,34 +69,22 @@ def main() -> int:
         quiet = dict(stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         step("unit: geometry equals the official engine", call([TOOLS / "test_skymath.py", out], **quiet) == 0)
         step("unit: sky tracker", call([TOOLS / "test_tracker.py", out], **quiet) == 0)
-        if a.llm:
+        if has_model:
             step("unit: fault verdict path (good, veto, garbage, error)", call([TOOLS / "test_verdict.py", out], **quiet) == 0)
 
     # 3. smoke: short real-catalogue cards, pacing on, model off
-    off = ["OBSERVER_MODEL_DISABLED=1"]
     if "smoke" not in a.skip:
         tag = f"gate_{a.name}_smoke"
-        bench(tag, ["smoke"], out, off, a.jobs)
+        bench(tag, ["smoke"], out, ["OBSERVER_MODEL_DISABLED=1"], a.jobs)
         bad = healthy(tag, ["smoke"])
         step("smoke: four short A-D cards finish cleanly", not bad, "; ".join(bad))
 
-    # 4. model off = the core alone
-    if a.llm and "same" not in a.skip:
-        cards = ["A8", "C8"]
-        fixed = off + ["AO_FIXED_EFFORT=1"]
-        bench(f"gate_{a.name}_off", cards, out, fixed, a.jobs)
-        bench(f"gate_{a.name}_core", cards, core, fixed, a.jobs)
-        pairs = [(c, (load_summary(f"gate_{a.name}_off", c) or {}).get("total"), (load_summary(f"gate_{a.name}_core", c) or {}).get("total")) for c in cards]
-        same = all(x is not None and x == y for _, x, y in pairs)
-        step("same: with the model off the scores equal the core's", same, ", ".join(f"{c} {x} vs {y}" for c, x, y in pairs))
-
-    # 5. model stages against the local stand-in
-    if a.llm and "model" not in a.skip:
+    # 4. model stages against the local stand-in
+    if has_model and "model" not in a.skip:
         modes = ["good", "notools", "texttool", "reasoning", "busy", "think", "garbage", "error", "slow"]
         servers, runs = [], []
         for k, mode in enumerate(modes):
-            port = 8770 + k
-            servers.append(subprocess.Popen([sys.executable, str(TOOLS / "mock_llm.py"), "--port", str(port), "--mode", mode]))
+            servers.append(subprocess.Popen([sys.executable, str(TOOLS / "mock_llm.py"), "--port", str(8770 + k), "--mode", mode]))
         time.sleep(1.0)
         try:
             for k, mode in enumerate(modes):
@@ -139,10 +126,9 @@ def main() -> int:
         print(f"GATE FAILED ({len(failed)} of {len(results)} checks) in {(time.time() - started) / 60:.1f} min: do not upload build/{a.name}.zip")
         return 1
     print(f"GATE PASSED ({len(results)} checks) in {(time.time() - started) / 60:.1f} min: build/{a.name}.zip can be uploaded.")
-    print("After the platform evaluation, open one card's log and look for 'model stages on:' / 'llm night briefing' lines:"
-          if a.llm else "This build has no model stages: fine for comparisons, not eligible for prizes.")
-    if a.llm:
-        print("without them the platform did not hand the key to the program and the run was rules only.")
+    if has_model:
+        print("After a platform evaluation, look for 'model stages on:' in a card's log: without it the platform did not hand "
+              "the key to the program and the run was rules only.")
     return 0
 
 

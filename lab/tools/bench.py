@@ -2,7 +2,7 @@
 """Run an agent over cards with the official local runner (the platform's own engine); store and tabulate scores.
 
     python3 tools/bench.py --tag NAME --set quick                       # sets, groups, 'L' or card names; several allowed
-    python3 tools/bench.py --tag NAME --set real_dev var_dev --agent-dir build/v1_llm --env AO_FIXED_EFFORT=1
+    python3 tools/bench.py --tag NAME --set real_dev var_dev --agent-dir ../agent --env AO_FIXED_EFFORT=1
     python3 tools/bench.py --tag NAME --set tune --resume               # only the cards that have no result yet
     python3 tools/bench.py --compare pro g1 NAME --set dev              # stored results side by side
 
@@ -85,7 +85,7 @@ def compare(tags, cards):
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--tag"); ap.add_argument("--agent-dir", default="agent"); ap.add_argument("--cmd", default=DEFAULT_CMD)
+    ap.add_argument("--tag"); ap.add_argument("--agent-dir", default="../agent"); ap.add_argument("--cmd", default=DEFAULT_CMD)
     ap.add_argument("--set", nargs="+", default=["dev"]); ap.add_argument("--jobs", type=int, default=max(1, (os.cpu_count() or 2) - 2))
     ap.add_argument("--env", nargs="*", default=[]); ap.add_argument("--wallclock", type=int)
     ap.add_argument("--resume", action="store_true", help="skip cards that already have a result under this tag")

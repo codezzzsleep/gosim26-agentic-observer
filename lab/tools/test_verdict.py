@@ -3,7 +3,7 @@ import os as _os
 from pathlib import Path as _Path
 WORK = _Path(_os.environ.get("AO_WORK", _Path(__file__).resolve().parents[1]))        # the lab folder
 REPO = _Path(_os.environ.get("SURVEY26_REPO", WORK / "hackathon-survey26"))           # the official repository
-AGENT_DIR = _Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else WORK / "build" / "next_llm"      # an assembled folder with the model stages
+AGENT_DIR = _Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else WORK.parent / "agent"      # an agent folder with the model stages
 sys.path.insert(0, str(REPO)); sys.path.insert(0, str(AGENT_DIR))
 os.environ.update({"NO_PROXY": "127.0.0.1", "no_proxy": "127.0.0.1", "AO_LLM_PREFIX": "OPENAI", "OPENAI_API_KEY": "test",
                    "OPENAI_BASE_URL": "http://127.0.0.1:8767/v1", "OPENAI_MODEL": "mock"})      # the prefix keeps real keys in the environment out of it

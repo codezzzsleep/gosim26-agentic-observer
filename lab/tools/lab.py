@@ -9,6 +9,7 @@ import math
 import random
 
 CARDS = WORK / "cards"
+AGENT = WORK.parent / "agent"          # the submitted agent, at the top of the repository
 RUNS = WORK / "runs"
 RUNNER = REPO / "examples" / "_local" / "runner" / "run_local.py"
 LCARDS = REPO / "examples" / "_local" / "cards"

@@ -1,3 +1,0 @@
-# The only third-party package: array maths for the planner and the sky tracker.
-# Installed by the build step in observer.project.json into ./.deps (the container's system directories are read-only).
-numpy==2.2.6
