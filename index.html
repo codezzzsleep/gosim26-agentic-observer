@@ -3,16 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0b1015" />
+    <meta name="theme-color" content="#05070d" />
     <meta
       name="description"
-      content="Agentic Observer · 巡天值班智能体。GOSIM 2026 决赛第 6 名：数值规划每一次曝光，大模型理解值班日志，用 84 张本地任务卡验证改动。"
+      content="cloudbrain 的 GOSIM 2026 巡天值班智能体，决赛第 6 名。数值规划每一次曝光，大模型理解公报与日志。"
     />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Agentic Observer · 巡天值班智能体" />
+    <meta
+      property="og:title"
+      content="Agentic Observer / cloudbrain · 巡天值班智能体"
+    />
     <meta
       property="og:description"
-      content="每一次曝光，都为整个赛季。数值规划、文字理解与可复现的实验闭环。"
+      content="数值规划每一次曝光，大模型读懂每一段文字。GOSIM 2026 决赛第 6 名。"
     />
     <meta
       property="og:url"
@@ -23,242 +26,176 @@
       href="https://codezzzsleep.github.io/gosim26-agentic-observer/"
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="fonts/space-grotesk.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="style.css" />
     <script src="app.js" defer></script>
-    <title>Agentic Observer · 巡天值班智能体</title>
+    <title>Agentic Observer / cloudbrain · 巡天值班智能体</title>
   </head>
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a>
+    <div class="scroll-progress" aria-hidden="true">
+      <i id="scroll-progress"></i>
+    </div>
     <header class="site-header">
-      <a class="brand" href="#top" aria-label="Agentic Observer 首页">
-        <svg
-          class="brand-mark"
-          viewBox="0 0 32 32"
-          fill="none"
-          aria-hidden="true"
-        >
-          <circle cx="16" cy="16" r="10" />
-          <ellipse
-            cx="16"
-            cy="16"
-            rx="15"
-            ry="5"
-            transform="rotate(-35 16 16)"
-          />
-          <circle class="brand-dot" cx="16" cy="16" r="2" />
-        </svg>
-        <span>AGENTIC OBSERVER<small>巡天值班智能体</small></span>
-      </a>
+      <a class="brand" href="#top" aria-label="cloudbrain 项目首页"
+        ><svg viewBox="0 0 36 36" aria-hidden="true" fill="none">
+          <circle cx="18" cy="18" r="12" />
+          <path d="M18 0v11m0 14v11M0 18h11m14 0h11" />
+          <circle cx="18" cy="18" r="3" /></svg
+        ><span>cloudbrain<small>GOSIM 2026 / 参赛作品</small></span></a
+      >
       <button
         class="menu-toggle"
         type="button"
         aria-expanded="false"
         aria-controls="navigation"
       >
-        导航 <span aria-hidden="true">＋</span>
+        MENU <span aria-hidden="true">＋</span>
       </button>
       <nav id="navigation" aria-label="主要导航">
-        <a href="#experiment">观测示意</a><a href="#architecture">工作原理</a
-        ><a href="#results">比赛成绩</a><a href="#lab">实验方法</a>
-        <a
+        <a href="#results">最终成绩</a><a href="#experiment">观测交互</a
+        ><a href="#architecture">智能体架构</a><a href="#lab">实验方法</a
+        ><a
           class="nav-source"
           href="https://github.com/codezzzsleep/gosim26-agentic-observer"
-          >源码 <span aria-hidden="true">↗</span></a
+          >SOURCE CODE <span aria-hidden="true">↗</span></a
         >
       </nav>
     </header>
-
     <main id="main">
-      <section class="hero wrap" id="top" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <div class="eyebrow">
-            <span class="status-dot"></span> GOSIM 2026 · 比赛已结束 · 最终作品
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <canvas
+          id="sky-background"
+          class="sky-background"
+          aria-hidden="true"
+        ></canvas>
+        <div class="hero-veil" aria-hidden="true"></div>
+        <div class="hero-topline wrap">
+          <span>GOSIM HACKATHON · INTELLIGENT SURVEY OPERATIONS</span
+          ><span class="archive-label"><i></i> FINAL SUBMISSION / 已归档</span>
+        </div>
+        <div class="hero-layout wrap">
+          <div class="hero-copy">
+            <p class="eyebrow">TEAM CLOUDBRAIN / 巡天值班智能体</p>
+            <h1 id="hero-title">
+              Agentic<br /><span>Observer<span class="title-dot">.</span></span>
+            </h1>
+            <h2 class="hero-chinese">让智能体，为星空值班。</h2>
+            <p class="hero-description">
+              数值规划每一次曝光，大模型读懂每一段文字。<br />在不断变化的天空与有限的时间里，让望远镜完成一整个赛季的观测。
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#experiment"
+                >进入观测示意 <span aria-hidden="true">↗</span></a
+              ><a
+                class="button secondary"
+                href="https://create.gosim.org/survey26/platform/leaderboard/final-hidden"
+                >官方最终榜单 <span aria-hidden="true">↗</span></a
+              >
+            </div>
+            <div class="hero-stack">
+              <span>PYTHON</span><span>NUMPY</span><span>BAYES FILTER</span
+              ><span>LLM</span>
+            </div>
           </div>
-          <p class="hero-kicker">AGENTIC OBSERVER / 巡天值班智能体</p>
-          <h1 id="hero-title">每一次曝光，<br /><em>都为整个赛季。</em></h1>
-          <p class="hero-description">
-            在模拟的光纤光谱巡天中，担任一整季的值班天文学家。数值规划决定如何观测，大模型读懂公报与日志，在有限时间里，把每一根光纤用在值得的目标上。
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#experiment"
-              >看一次观测如何选择 <span aria-hidden="true">↓</span></a
-            ><a
-              class="button quiet"
-              href="https://github.com/codezzzsleep/gosim26-agentic-observer"
-              >探索项目 <span aria-hidden="true">↗</span></a
-            >
-          </div>
-          <div class="hero-signoff">
-            <span>TEAM CLOUDBRAIN</span
-            ><span>NUMERICAL PLANNING × LANGUAGE UNDERSTANDING</span>
+          <div class="sky-console">
+            <div class="console-heading">
+              <span><i class="signal-dot"></i> SKY / TARGET FIELD</span
+              ><span>CONCEPT VIEW</span>
+            </div>
+            <div class="sky-map-wrap">
+              <canvas
+                id="hero-map"
+                width="700"
+                height="560"
+                role="img"
+                aria-label="巡天天空坐标与光纤视场的概念图"
+              ></canvas
+              ><span class="map-axis axis-top">ZENITH / 90°</span
+              ><span class="map-axis axis-bottom">HORIZON / 0°</span>
+              <div class="map-tag">
+                <span>FIBRE FIELD</span><strong>4 × 4</strong
+                ><span>ONE TARGET PER FIBRE</span>
+              </div>
+            </div>
+            <div class="console-legend">
+              <span><i class="dot blue"></i> 可选目标</span
+              ><span><i class="dot gold"></i> 必观测目标</span
+              ><span><i class="dot white"></i> 选中视场</span>
+            </div>
+            <div class="console-footer">
+              <span>公开星表 → 状态推断 → 下一次观测</span
+              ><span>概念图 · 非比赛回放</span>
+            </div>
           </div>
         </div>
-        <div class="hero-visual" aria-hidden="true">
-          <svg viewBox="0 0 620 570" class="sky-art">
-            <defs>
-              <radialGradient id="sky-glow">
-                <stop stop-color="#1e4941" stop-opacity=".5" />
-                <stop offset="1" stop-color="#0b1015" stop-opacity="0" />
-              </radialGradient>
-              <linearGradient id="beam" x1="0" y1="1" x2="1" y2="0">
-                <stop stop-color="#79dfb8" stop-opacity="0" />
-                <stop offset="1" stop-color="#79dfb8" stop-opacity=".1" />
-              </linearGradient>
-            </defs>
-            <circle cx="315" cy="275" r="255" fill="url(#sky-glow)" />
-            <g class="sky-orbits" fill="none" stroke="#43645e">
-              <circle cx="315" cy="270" r="205" />
-              <ellipse
-                cx="315"
-                cy="270"
-                rx="205"
-                ry="76"
-                transform="rotate(-28 315 270)"
-              />
-              <ellipse
-                cx="315"
-                cy="270"
-                rx="205"
-                ry="155"
-                transform="rotate(-28 315 270)"
-              />
-              <ellipse
-                cx="315"
-                cy="270"
-                rx="87"
-                ry="205"
-                transform="rotate(-28 315 270)"
-              />
-              <path d="M105 270H525M315 58V481" />
-            </g>
-            <g id="hero-stars" fill="#a9bdbb">
-              <circle cx="179" cy="185" r="2" />
-              <circle cx="449" cy="216" r="2" />
-              <circle cx="221" cy="395" r="2" />
-              <circle cx="397" cy="371" r="2" />
-            </g>
-            <path d="M154 456L281 176L404 235Z" fill="url(#beam)" />
-            <g
-              transform="translate(245 157) rotate(14 72 72)"
-              class="fibre-art"
-              fill="none"
-              stroke="#79dfb8"
-            >
-              <rect width="144" height="144" rx="2" />
-              <path
-                d="M36 0V144M72 0V144M108 0V144M0 36H144M0 72H144M0 108H144"
-              />
-              <path
-                d="M-9 0H-17V-17H0M144-9V-17H161V0M161 144V161H144M0 161H-17V144"
-              />
-              <g fill="#9af1cf" stroke="none">
-                <circle cx="16" cy="21" r="3" />
-                <circle cx="56" cy="14" r="3" />
-                <circle cx="87" cy="27" r="3" />
-                <circle cx="125" cy="16" r="3" />
-                <circle cx="20" cy="54" r="3" />
-                <circle cx="49" cy="61" r="3" />
-                <circle cx="83" cy="50" r="3" />
-                <circle cx="127" cy="58" r="3" />
-                <circle cx="18" cy="91" r="3" />
-                <circle cx="58" cy="83" r="3" />
-                <circle cx="89" cy="92" r="3" />
-                <circle cx="129" cy="82" r="3" />
-                <circle cx="26" cy="123" r="3" />
-                <circle cx="50" cy="130" r="3" />
-                <circle cx="94" cy="117" r="3" />
-                <circle cx="119" cy="126" r="3" />
-              </g>
-            </g>
-            <g class="sky-labels" fill="#80998f">
-              <text x="102" y="70">A SEASON OF DECISIONS</text>
-              <text x="393" y="141" fill="#79dfb8">OBSERVATION FIELD</text>
-              <path d="M407 149L386 173" stroke="#79dfb8" stroke-opacity=".5" />
-              <text x="367" y="453">ONE TARGET / ONE FIBRE</text>
-              <text x="215" y="523" fill="#79dfb8">
-                OBSERVE → INFER → PLAN → OBSERVE
-              </text>
-            </g>
-            <circle cx="137" cy="368" r="5" fill="#79dfb8" />
-            <circle
-              cx="137"
-              cy="368"
-              r="13"
-              fill="none"
-              stroke="#79dfb8"
-              stroke-opacity=".3"
-            />
-          </svg>
-          <span class="visual-corner">光纤视场 · 概念示意</span>
+        <div class="hero-bottom wrap">
+          <span class="bottom-label">SURVEY CONSTRAINTS</span
+          ><span><b>900 s</b> CPU BUDGET</span
+          ><span><b>1800 s</b> WALL CLOCK</span
+          ><span><b>BEST EXPOSURE</b> ONLY</span
+          ><a href="#results"
+            >FINAL RESULTS <span aria-hidden="true">↓</span></a
+          >
         </div>
       </section>
 
-      <div class="metrics wrap" aria-label="项目概览">
-        <div>
-          <span class="metric-value">6<small>th</small></span
-          ><span class="metric-label">决赛最终名次</span>
-        </div>
-        <div>
-          <span class="metric-value">31,680</span
-          ><span class="metric-label">隐藏卡决赛总分</span>
-        </div>
-        <div>
-          <span class="metric-value">84</span
-          ><span class="metric-label">本地模拟任务卡</span>
-        </div>
-        <div>
-          <span class="metric-value metric-word">numpy</span
-          ><span class="metric-label">唯一第三方依赖</span>
-        </div>
-      </div>
-
       <section
-        class="section wrap"
-        id="mission"
-        aria-labelledby="mission-title"
+        class="results-section wrap"
+        id="results"
+        aria-labelledby="results-title"
       >
-        <div class="section-heading">
+        <div class="section-heading compact">
           <div>
-            <div class="eyebrow">01 / THE MISSION</div>
-            <h2 id="mission-title">一次曝光，四个决定。</h2>
+            <p class="eyebrow">FINAL / HIDDEN CARDS E–H</p>
+            <h2 id="results-title">在没见过的天空里交卷。</h2>
           </div>
-          <p>望远镜的时间不能存起来。<br />每一步，都要同时考虑眼前和以后。</p>
+          <a
+            class="text-link"
+            href="https://create.gosim.org/survey26/platform/leaderboard/final-hidden"
+            >查看官方榜单 ↗</a
+          >
         </div>
-        <div class="decision-list">
-          <article>
-            <span class="decision-number">01</span>
-            <h3>指向哪里</h3>
-            <p>从当前可见的天区里，搜索能容纳更多高收益目标的观测视场。</p>
-            <span class="mono">POINTING / ALT · AZ</span>
-          </article>
-          <article>
-            <span class="decision-number">02</span>
-            <h3>光纤给谁</h3>
-            <p>
-              按光纤格子的真实几何，每根光纤选一个目标，让整个视场的收益更高。
-            </p>
-            <span class="mono">ASSIGNMENT / TARGET → FIBRE</span>
-          </article>
-          <article>
-            <span class="decision-number">03</span>
-            <h3>曝光多久</h3>
-            <p>
-              同一目标只计最好的一次曝光。拍到一半再重拍，往往是在重复花时间。
-            </p>
-            <span class="mono">EXPOSURE / 90–3600 s *</span>
-          </article>
-          <article>
-            <span class="decision-number">04</span>
-            <h3>用什么程序</h3>
-            <p>
-              根据天气与月光，选择 DARK、BRIGHT 或 BACKUP，争取合适的计分倍率。
-            </p>
-            <span class="mono">PROGRAM / DARK · BRIGHT · BACKUP</span>
-          </article>
+        <div class="final-board">
+          <div class="rank-cell">
+            <span class="mono">FINAL RANK</span><strong><span>#</span>06</strong
+            ><span>cloudbrain</span>
+          </div>
+          <div class="total-cell">
+            <span class="mono">OVERALL SCORE</span><strong>31,680</strong
+            ><span>每张隐藏卡评测 3 次取平均</span>
+          </div>
+          <div class="card-scores">
+            <div>
+              <span>CARD E</span><strong>36,969</strong
+              ><i style="--score: 92.4%"></i>
+            </div>
+            <div>
+              <span>CARD F</span><strong>29,502</strong
+              ><i style="--score: 73.8%"></i>
+            </div>
+            <div>
+              <span>CARD G</span><strong>27,216</strong
+              ><i style="--score: 68%"></i>
+            </div>
+            <div>
+              <span>CARD H</span><strong>33,035</strong
+              ><i style="--score: 82.6%"></i>
+            </div>
+          </div>
         </div>
         <p class="caption">
-          * 规划器的候选时长覆盖 90–3600
-          秒；实际上下限由任务卡中的仪器参数决定。
+          最终排名来自隐藏卡 E–H。成绩与名次已对照
+          <a
+            href="https://create.gosim.org/survey26/platform/leaderboard/final-hidden"
+            >GOSIM 官方最终榜单</a
+          >；公开卡 A–D 用于比赛期间验证。
         </p>
       </section>
 
@@ -269,52 +206,54 @@
       >
         <div class="section-heading">
           <div>
-            <div class="eyebrow">02 / TRY AN OBSERVATION</div>
-            <h2 id="experiment-title">
-              给定一片星空，<br />怎样用好每根光纤？
-            </h2>
+            <p class="eyebrow">01 / OBSERVATION WORKBENCH</p>
+            <h2 id="experiment-title">下一次，<br />望远镜应该看哪里？</h2>
           </div>
-          <p>改变天空条件和曝光时长，<br />看看同一个视场会选择哪些目标。</p>
+          <p class="section-description">
+            指向、目标、时长、程序，四个决定一起做。<br />试着改变天空条件，看一根光纤如何选择目标。
+          </p>
+        </div>
+        <div class="workbench-title">
+          <span><i class="signal-dot"></i> FIBRE ASSIGNMENT / 16 CHANNELS</span
+          ><span>交互原理示意</span>
         </div>
         <div class="observation-demo">
           <div class="field-panel">
             <div class="panel-top">
-              <span class="mono">FIBRE FIELD / 4 × 4</span
-              ><span class="small-pill">固定示例星场</span>
+              <span>INSTRUMENT PLANE / 4 × 4</span><span>FIXED CATALOGUE</span>
             </div>
             <canvas
               id="field-canvas"
               width="800"
               height="600"
               role="img"
-              aria-label="16 个光纤格子中的示例目标分配，文字结果显示在右侧"
+              aria-label="16 个光纤格子中的示例目标分配，文字结果显示在控制面板中"
             ></canvas>
             <div class="field-legend">
-              <span><i class="legend-dot selected"></i>当前选中</span
-              ><span><i class="legend-dot candidate"></i>可选目标</span
-              ><span><i class="legend-dot complete"></i>已有更好曝光</span>
+              <span><i class="dot blue"></i> 当前选中</span
+              ><span><i class="dot white"></i> 可选目标</span
+              ><span><i class="dot dim"></i> 已有更好曝光</span>
             </div>
           </div>
           <div class="demo-controls">
-            <div class="eyebrow">OBSERVING CONDITIONS</div>
+            <p class="eyebrow">EXPOSURE CONTROL</p>
             <h3>天空变了，选择也变。</h3>
             <fieldset class="weather-control">
-              <legend>天空条件</legend>
+              <legend>01 / 天空条件</legend>
               <div class="segmented">
                 <button type="button" data-weather="0.95" aria-pressed="false">
-                  晴好</button
+                  晴好 <span>CLEAR</span></button
                 ><button type="button" data-weather="0.7" aria-pressed="true">
-                  普通</button
+                  普通 <span>NORMAL</span></button
                 ><button type="button" data-weather="0.4" aria-pressed="false">
-                  较差
+                  较差 <span>POOR</span>
                 </button>
               </div>
             </fieldset>
             <label class="slider-label" for="duration"
-              >曝光时长
+              >02 / 曝光时长
               <output id="duration-label" for="duration">900 秒</output></label
-            >
-            <input
+            ><input
               id="duration"
               type="range"
               min="90"
@@ -322,11 +261,9 @@
               step="30"
               value="900"
             />
-            <div class="slider-ends mono">
-              <span>90 s</span><span>3600 s</span>
-            </div>
+            <div class="slider-ends"><span>90 s</span><span>3600 s</span></div>
             <button class="auto-button" type="button" id="auto-duration">
-              按示例收益选择时长 <span aria-hidden="true">↗</span>
+              按示例收益选择时长 <span aria-hidden="true">→</span>
             </button>
             <div class="demo-results" aria-live="polite" aria-atomic="true">
               <div>
@@ -340,507 +277,510 @@
               </div>
             </div>
             <p class="demo-explanation" id="demo-explanation">
-              更长的曝光能完成更多目标，也会占用更多观测时间。
+              同一目标只保留最好的一次曝光。
             </p>
           </div>
         </div>
         <p class="caption">
-          交互原理示意：使用固定生成的目标、简化的完成度与收益公式，不是比赛数据或真实观测回放。实际规划器还会搜索指向、估计未来价值，并处理必观测目标与限时请求。<a
+          固定生成的星场与简化收益公式，用于解释“一格一根光纤”和“只计最好的一次曝光”。实际规划器还搜索指向、估计未来价值，并处理必观测目标和限时请求。<a
             href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/planner.py"
-            >查看实际规划器 ↗</a
+            >阅读实际规划器 ↗</a
           >
         </p>
         <noscript
-          ><p class="no-script">
+          ><p>
             启用 JavaScript
-            可体验观测示意。实际规则是：一格一根光纤，每格选一个目标；同一目标只保留最好的一次曝光。
+            可体验观测交互。实际规则：一根光纤一个目标，同一目标只保留最好的一次曝光。
           </p></noscript
         >
+        <div class="four-decisions">
+          <article>
+            <span>01 / POINTING</span>
+            <h3>指向哪里</h3>
+            <p>高价值目标与密集天区提供锚点，搜索能容纳更多收益的视场。</p>
+          </article>
+          <article>
+            <span>02 / ASSIGNMENT</span>
+            <h3>光纤给谁</h3>
+            <p>按切平面上的格子几何，每根光纤选择格内收益最高的目标。</p>
+          </article>
+          <article>
+            <span>03 / EXPOSURE</span>
+            <h3>曝光多久</h3>
+            <p>
+              半截曝光若仍要重拍，就会占用未来时间。把赛季里的光纤时间定价。
+            </p>
+          </article>
+          <article>
+            <span>04 / PROGRAM</span>
+            <h3>用什么程序</h3>
+            <p>根据天气与月光，在 DARK、BRIGHT、BACKUP 中选择合适的档位。</p>
+          </article>
+        </div>
       </section>
 
       <section
-        class="section wrap"
+        class="architecture-section"
         id="architecture"
         aria-labelledby="architecture-title"
       >
-        <div class="section-heading">
-          <div>
-            <div class="eyebrow">03 / HOW IT WORKS</div>
-            <h2 id="architecture-title">计算做决策，<br />模型读文字。</h2>
+        <div class="wrap section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">02 / AGENT ARCHITECTURE</p>
+              <h2 id="architecture-title">
+                数值规划做决策。<br />语言模型做判断。
+              </h2>
+            </div>
+            <p class="section-description">
+              从公开信息出发，用自己的观测校正状态。<br />每一次反馈，都是下一次选择的依据。
+            </p>
           </div>
-          <p>每个环节都有明确职责。<br />新反馈回来，再更新下一次选择。</p>
-        </div>
-        <div
-          class="loop-diagram"
-          aria-label="决策循环：公开输入、状态推断、数值规划、动作执行、曝光反馈再回到状态推断"
-        >
-          <span>公报 · 日志 · 星表</span><b aria-hidden="true">→</b
-          ><span>状态推断</span><b aria-hidden="true">→</b
-          ><span class="loop-focus">数值规划</span><b aria-hidden="true">→</b
-          ><span>观测 · 等待 · 报修</span><b aria-hidden="true">↩</b
-          ><span>曝光反馈</span>
-        </div>
-        <div class="architecture-tabs" role="tablist" aria-label="核心模块">
-          <button
-            type="button"
-            role="tab"
-            id="tab-planner"
-            aria-selected="true"
-            aria-controls="panel-planner"
+          <div class="architecture-tabs" role="tablist" aria-label="核心模块">
+            <button
+              type="button"
+              role="tab"
+              id="tab-planner"
+              aria-selected="true"
+              aria-controls="panel-planner"
+              tabindex="0"
+            >
+              <span>01 / PLANNING</span><strong>数值规划</strong
+              ><small>planner.py</small></button
+            ><button
+              type="button"
+              role="tab"
+              id="tab-tracker"
+              aria-selected="false"
+              aria-controls="panel-tracker"
+              tabindex="-1"
+            >
+              <span>02 / INFERENCE</span><strong>状态跟踪</strong
+              ><small>tracker.py</small></button
+            ><button
+              type="button"
+              role="tab"
+              id="tab-model"
+              aria-selected="false"
+              aria-controls="panel-model"
+              tabindex="-1"
+            >
+              <span>03 / LANGUAGE</span><strong>文字理解</strong
+              ><small>supervisor.py</small></button
+            ><button
+              type="button"
+              role="tab"
+              id="tab-budget"
+              aria-selected="false"
+              aria-controls="panel-budget"
+              tabindex="-1"
+            >
+              <span>04 / TIME BUDGET</span><strong>预算守卫</strong
+              ><small>agent.py</small>
+            </button>
+          </div>
+          <div
+            class="architecture-panel"
+            id="panel-planner"
+            role="tabpanel"
+            aria-labelledby="tab-planner"
             tabindex="0"
           >
-            数值规划</button
-          ><button
-            type="button"
-            role="tab"
-            id="tab-tracker"
-            aria-selected="false"
-            aria-controls="panel-tracker"
-            tabindex="-1"
+            <div class="module-main">
+              <span class="module-symbol">Σ</span>
+              <div>
+                <p class="eyebrow">SEASON-AWARE PLANNING</p>
+                <h3>不只问“这一步赚多少”。</h3>
+                <p>
+                  先估计剩余赛季能完成哪些目标，为光纤时间定价，再联合搜索指向、时长和分配。对以后仍要重拍的半截曝光，计入它占用未来时间的代价。
+                </p>
+                <a
+                  class="text-link"
+                  href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/planner.py"
+                  >PLANNER.PY ↗</a
+                >
+              </div>
+            </div>
+            <div class="module-details">
+              <article>
+                <span>COARSE → FINE</span>
+                <h4>先粗搜索，再精修</h4>
+                <p>
+                  高价值目标与密集天区提供锚点，在附近搜索指向偏移，再细化最有希望的方案。
+                </p>
+              </article>
+              <article>
+                <span>PRIORITY OVER TIME</span>
+                <h4>优先级随赛季改变</h4>
+                <p>
+                  必观测目标按以后来不及完成的风险加权；限时请求先判断可行性，再投入观测时间。
+                </p>
+              </article>
+            </div>
+          </div>
+          <div
+            class="architecture-panel"
+            id="panel-tracker"
+            role="tabpanel"
+            aria-labelledby="tab-tracker"
+            tabindex="0"
+            hidden
           >
-            状态跟踪</button
-          ><button
-            type="button"
-            role="tab"
-            id="tab-model"
-            aria-selected="false"
-            aria-controls="panel-model"
-            tabindex="-1"
+            <div class="module-main">
+              <span class="module-symbol">P</span>
+              <div>
+                <p class="eyebrow">BAYESIAN STATE ESTIMATION</p>
+                <h3>低收益，是天气还是故障？</h3>
+                <p>
+                  贝叶斯滤波同时估计天气水平 W、仪器效率 η
+                  和故障概率。天气影响完成度与程序档位，仪器效率只影响完成度，曝光反馈让两者逐步分开。
+                </p>
+                <a
+                  class="text-link"
+                  href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/tracker.py"
+                  >TRACKER.PY ↗</a
+                >
+              </div>
+            </div>
+            <div class="module-details">
+              <article>
+                <span>HAZARDS / POINTING</span>
+                <h4>区分不同的异常</h4>
+                <p>
+                  处理地形遮挡、局部天气、圆顶关闭与地震，用命中和未命中结果估计隐藏指向偏差。
+                </p>
+              </article>
+              <article>
+                <span>LEDGER / RECOVERY</span>
+                <h4>数据丢失后重建</h4>
+                <p>
+                  账本可作废指定窗口并重放，再用引擎返回的最佳成绩校正状态，重新安排目标。
+                </p>
+              </article>
+            </div>
+          </div>
+          <div
+            class="architecture-panel"
+            id="panel-model"
+            role="tabpanel"
+            aria-labelledby="tab-model"
+            tabindex="0"
+            hidden
           >
-            文字理解</button
-          ><button
-            type="button"
-            role="tab"
-            id="tab-budget"
-            aria-selected="false"
-            aria-controls="panel-budget"
-            tabindex="-1"
+            <div class="module-main">
+              <span class="module-symbol">文</span>
+              <div>
+                <p class="eyebrow">BOUNDED LANGUAGE REASONING</p>
+                <h3>理解文字，影响有界。</h3>
+                <p>
+                  模型提取日志事实、写夜间简报、裁决故障，并通过工具复盘赛季。答案经过代码校验，只在指定范围内生效；没有密钥或调用失败，依然按规则运行。
+                </p>
+                <a
+                  class="text-link"
+                  href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/supervisor.py"
+                  >SUPERVISOR.PY ↗</a
+                >
+              </div>
+            </div>
+            <div class="module-details">
+              <article>
+                <span>GROUNDED FACTS</span>
+                <h4>事实必须有来源</h4>
+                <p>
+                  故障、维护和校准日程须引用原文行号，并通过时区、时间窗口与更正版本的校验。
+                </p>
+              </article>
+              <article>
+                <span>PAUSE / WAIT / CONTINUE</span>
+                <h4>调用也有时间成本</h4>
+                <p>
+                  关键时点暂停并等待回答；单请求、限流退避、服务切换与工具协议回退控制失败影响。
+                </p>
+              </article>
+            </div>
+          </div>
+          <div
+            class="architecture-panel"
+            id="panel-budget"
+            role="tabpanel"
+            aria-labelledby="tab-budget"
+            tabindex="0"
+            hidden
           >
-            时间预算
-          </button>
-        </div>
-        <div
-          class="architecture-panel"
-          id="panel-planner"
-          role="tabpanel"
-          aria-labelledby="tab-planner"
-          tabindex="0"
-        >
-          <div class="module-intro">
-            <span class="module-index">Σ</span>
-            <div>
-              <h3>不只问“这一步赚多少”。</h3>
-              <p>
-                先估计剩余赛季能完成哪些目标，为光纤时间定价，再搜索指向、时长和分配。对以后仍要重拍的半截曝光，计入它占用未来时间的代价。
-              </p>
-              <a
-                class="source-link"
-                href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/planner.py"
-                >planner.py ↗</a
-              >
+            <div class="module-main">
+              <span class="module-symbol">t</span>
+              <div>
+                <p class="eyebrow">CPU & WALL-CLOCK GUARD</p>
+                <h3>跑完整季，才拿得到后面的分。</h3>
+                <p>
+                  每卡有 900 秒 CPU 预算与 30
+                  分钟真实时间上限。引擎随着曝光账本变大而变慢，守卫持续测量并预测剩余赛季需要的真实时间。
+                </p>
+                <a
+                  class="text-link"
+                  href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/agent.py"
+                  >AGENT.PY ↗</a
+                >
+              </div>
+            </div>
+            <div class="module-details">
+              <article>
+                <span>FEWER / LONGER EXPOSURES</span>
+                <h4>先少搜，再少做几步</h4>
+                <p>
+                  预算吃紧时先降低搜索力度，再提高普通曝光的最短时长，用更少、更长的曝光跑完赛季。
+                </p>
+              </article>
+              <article>
+                <span>VALIDATE / FALL BACK</span>
+                <h4>固定档位与异常兜底</h4>
+                <p>
+                  搜索力度按固定档位调整；发出前校验动作，决策异常则替换为一次等待。
+                </p>
+              </article>
             </div>
           </div>
-          <div class="module-details">
+          <div class="model-roles">
             <div>
-              <h4>粗搜索，再精修</h4>
-              <p>
-                高价值目标与密集天区提供锚点；周围搜索指向偏移，再细化最有希望的方案。
-              </p>
+              <span>LLM / DUTY LOG</span>
+              <h4>值班日志</h4>
+              <p>原文 → 有来源的故障与维护日程</p>
             </div>
             <div>
-              <h4>随时间改变优先级</h4>
-              <p>
-                必观测目标按以后来不及完成的风险加权；限时请求先判断可行性，再投入观测时间。
-              </p>
-            </div>
-          </div>
-        </div>
-        <div
-          class="architecture-panel"
-          id="panel-tracker"
-          role="tabpanel"
-          aria-labelledby="tab-tracker"
-          tabindex="0"
-          hidden
-        >
-          <div class="module-intro">
-            <span class="module-index">P</span>
-            <div>
-              <h3>低收益，是天气还是故障？</h3>
-              <p>
-                贝叶斯滤波同时估计天气水平 W、仪器效率 η
-                和故障概率。天气影响完成度与程序档位，仪器效率只影响完成度，曝光反馈让两者逐步分开。
-              </p>
-              <a
-                class="source-link"
-                href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/tracker.py"
-                >tracker.py ↗</a
-              >
-            </div>
-          </div>
-          <div class="module-details">
-            <div>
-              <h4>处理方向与指向</h4>
-              <p>
-                区分地形遮挡、局部天气、圆顶关闭与地震；用命中和未命中结果估计隐藏指向偏差。
-              </p>
+              <span>LLM / BRIEFING</span>
+              <h4>夜间简报</h4>
+              <p>公报与预报 → 今晚的观测姿态</p>
             </div>
             <div>
-              <h4>数据丢失后重建</h4>
-              <p>
-                曝光账本可作废指定窗口并重放，再用引擎返回的最佳成绩校正状态，重新安排目标。
-              </p>
+              <span>LLM / FAULT VERDICT</span>
+              <h4>故障裁决</h4>
+              <p>近期曝光证据 → 报修或暂缓</p>
+            </div>
+            <div>
+              <span>LLM / SEASON REVIEW</span>
+              <h4>赛季复盘</h4>
+              <p>四个查询工具 → 完整曝光偏好 ±0.10</p>
             </div>
           </div>
         </div>
-        <div
-          class="architecture-panel"
-          id="panel-model"
-          role="tabpanel"
-          aria-labelledby="tab-model"
-          tabindex="0"
-          hidden
-        >
-          <div class="module-intro">
-            <span class="module-index">文</span>
+      </section>
+
+      <section class="lab-section" id="lab" aria-labelledby="lab-title">
+        <div class="wrap section">
+          <div class="section-heading">
             <div>
-              <h3>理解文字，影响有界。</h3>
-              <p>
-                模型提取日志事实、写夜间简报、判断故障，并通过工具复盘赛季。答案经代码校验，只在指定范围内生效；没有密钥或调用失败，仍可按规则运行。
-              </p>
-              <a
-                class="source-link"
-                href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/supervisor.py"
-                >supervisor.py ↗</a
-              >
+              <p class="eyebrow">03 / THE EXPERIMENTAL METHOD</p>
+              <h2 id="lab-title">让每一个改动，<br />接受没见过的任务检验。</h2>
+            </div>
+            <div class="lab-total">
+              <strong>84</strong><span>LOCAL TASK CARDS</span>
             </div>
           </div>
-          <div class="module-details">
-            <div>
-              <h4>事实必须有来源</h4>
-              <p>
-                故障、维护和校准日程必须引用原文行号，并通过时区、时间窗口与更正版本的校验。
-              </p>
-            </div>
-            <div>
-              <h4>调用也有时间成本</h4>
-              <p>
-                关键时点暂停、等待回答、继续；单请求、限流退避、服务切换与工具协议回退控制失败影响。
-              </p>
-            </div>
+          <div class="lab-intro">
+            <p>
+              用官方公开模拟器造出带天气、事件和限时请求的本地卡。真实目录配模拟天气，再随机改变站点、季节、规模与仪器配置，检验不同任务下的表现。
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/codezzzsleep/gosim26-agentic-observer/tree/main/lab"
+              >阅读实验环境 ↗</a
+            >
           </div>
-        </div>
-        <div
-          class="architecture-panel"
-          id="panel-budget"
-          role="tabpanel"
-          aria-labelledby="tab-budget"
-          tabindex="0"
-          hidden
-        >
-          <div class="module-intro">
-            <span class="module-index">t</span>
-            <div>
-              <h3>跑完整季，才拿得到后面的分。</h3>
-              <p>
-                每卡有 900 秒 CPU 预算与 30
-                分钟真实时间上限。引擎随着曝光账本变大而变慢，真实时间守卫持续测量并预测剩余赛季的耗时。
-              </p>
-              <a
-                class="source-link"
-                href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/agent.py"
-                >agent.py ↗</a
-              >
-            </div>
+          <div class="lab-tiers">
+            <article>
+              <span class="tier-label">01 / QUICK</span
+              ><strong>12<span>张</span></strong>
+              <h3>快速反馈</h3>
+              <p>小卡先跑，发现明显回退与运行问题。</p>
+            </article>
+            <article>
+              <span class="tier-label">02 / TUNE</span
+              ><strong>20<span>张</span></strong>
+              <h3>主要调参</h3>
+              <p>正式规模与变体任务，比较候选方向。</p>
+            </article>
+            <article>
+              <span class="tier-label">03 / CONFIRM</span
+              ><strong>32<span>张</span></strong>
+              <h3>采纳前确认</h3>
+              <p>准备接受改动时，再检验能否泛化。</p>
+            </article>
+            <article class="sealed-tier">
+              <span class="tier-label">04 / SEALED TEST</span
+              ><strong>16<span>张</span></strong>
+              <h3>定版前封存</h3>
+              <p>保留到最终版本确定前，不用于调参。</p>
+            </article>
           </div>
-          <div class="module-details">
-            <div>
-              <h4>先少搜，再少做几步</h4>
-              <p>
-                预算吃紧时，先降低搜索力度，再提高普通曝光的最短时长，用更少、更长的曝光跑完赛季。
-              </p>
-            </div>
-            <div>
-              <h4>固定档位，逐层兜底</h4>
-              <p>
-                搜索力度按固定档位调整；动作发出前校验，决策异常则替换为一次等待。
-              </p>
-            </div>
+          <div class="lab-footnote">
+            <span>另有 4 张冒烟卡，共 84 张。</span
+            ><span>同卡配对比较 / Bootstrap 95% 区间 / 9 种假模型场景</span>
           </div>
-        </div>
-        <div class="model-roles">
-          <div>
-            <span class="mono">LLM / 01</span>
-            <h4>值班日志</h4>
-            <p>原文 → 有来源的故障与维护日程</p>
+          <div class="lab-flow">
+            <span>冻结基线</span><b aria-hidden="true">→</b
+            ><span>改一个变量</span><b aria-hidden="true">→</b
+            ><span>跑同一批卡</span><b aria-hidden="true">→</b
+            ><span>配对比较</span><b aria-hidden="true">→</b
+            ><span>上传前把关</span>
           </div>
-          <div>
-            <span class="mono">LLM / 02</span>
-            <h4>夜间简报</h4>
-            <p>公报与预报 → 今晚的观测姿态</p>
-          </div>
-          <div>
-            <span class="mono">LLM / 03</span>
-            <h4>故障裁决</h4>
-            <p>最近曝光证据 → 报修或暂缓</p>
-          </div>
-          <div>
-            <span class="mono">LLM / 04</span>
-            <h4>赛季复盘</h4>
-            <p>四个查询工具 → 完整曝光偏好 ±0.10</p>
-          </div>
+          <p class="caption">
+            本地天气与事件由模拟器生成，并非官方隐藏卡的真实天气。本地得分用于比较版本，不预测平台成绩。
+          </p>
         </div>
       </section>
 
       <section
         class="section wrap"
-        id="results"
-        aria-labelledby="results-title"
+        id="findings"
+        aria-labelledby="findings-title"
       >
         <div class="section-heading">
           <div>
-            <div class="eyebrow">04 / THE FINAL RESULTS</div>
-            <h2 id="results-title">比赛落幕，<br />在没见过的任务上交卷。</h2>
+            <p class="eyebrow">04 / WHAT WE LEARNED</p>
+            <h2 id="findings-title">把每一次试验的结论留下来。</h2>
           </div>
           <a
             class="text-link"
-            href="https://create.gosim.org/survey26/platform/leaderboard/final-hidden"
-            >官方最终榜单 ↗</a
+            href="https://github.com/codezzzsleep/gosim26-agentic-observer#验证与证据"
+            >查看验证记录 ↗</a
           >
-        </div>
-        <div class="results-layout">
-          <div class="final-result">
-            <span class="small-pill">FINAL · 隐藏任务卡 E–H</span>
-            <p class="final-score">31,680</p>
-            <h3>决赛第 6 名</h3>
-            <p>team cloudbrain<br />每张隐藏卡评测 3 次取平均。</p>
-            <span class="mono">GOSIM 2026 AGENTIC OBSERVER</span>
-          </div>
-          <div
-            class="score-chart"
-            role="group"
-            aria-label="隐藏卡成绩：E 36969，F 29502，G 27216，H 33035。决赛总分 31680。"
-          >
-            <div class="chart-title">
-              <span>隐藏任务卡</span><span>每卡成绩</span>
-            </div>
-            <div class="score-row">
-              <span>E</span>
-              <div class="score-track"><i style="--score: 92.42%"></i></div>
-              <strong>36,969</strong>
-            </div>
-            <div class="score-row">
-              <span>F</span>
-              <div class="score-track"><i style="--score: 73.76%"></i></div>
-              <strong>29,502</strong>
-            </div>
-            <div class="score-row">
-              <span>G</span>
-              <div class="score-track"><i style="--score: 68.04%"></i></div>
-              <strong>27,216</strong>
-            </div>
-            <div class="score-row">
-              <span>H</span>
-              <div class="score-track"><i style="--score: 82.59%"></i></div>
-              <strong>33,035</strong>
-            </div>
-            <p class="caption">
-              来源：<a
-                href="https://create.gosim.org/survey26/platform/leaderboard/final-hidden"
-                >官方最终榜单</a
-              >，cloudbrain 排名第 6。公开卡 A–D
-              用于比赛期间验证，最终排名来自隐藏卡 E–H。
-            </p>
-          </div>
         </div>
         <div class="findings">
           <article>
-            <span class="eyebrow">WHAT THE EXPERIMENTS TAUGHT US</span>
-            <h3>模型的价值，要放在合适的位置。</h3>
+            <span>01 / LANGUAGE MODELS</span>
+            <h3>模型的价值，放在合适的位置。</h3>
             <p>
-              公开卡上，模型环节对得分的影响落在运行噪声内。因此，把它用于日志语义与意外情况的判断；高频观测决策仍由数值规划器完成。
+              公开卡上，模型环节对得分的影响落在运行噪声内。因此，把它用于日志语义与意外情况的判断；高频观测决策由数值规划器完成。
             </p>
           </article>
           <article>
-            <span class="eyebrow">FINISHING MATTERS</span>
-            <h3>真正的瓶颈，也可能在引擎里。</h3>
+            <span>02 / REAL-TIME LIMIT</span>
+            <h3>瓶颈，也可能在引擎里。</h3>
             <p>
-              本地完整 183 夜实验中，开启真实时间守卫后，1,373
-              秒跑完，必观测缺失 4 个。未开启的那次被截断、缺失 46
-              个；两次机器负载不同，这项记录不是严格对照。
+              本地完整 183 夜实验中，守卫开启后 1,373 秒跑完，必观测缺失 4
+              个。未开启的那次被截断、缺失 46
+              个。两次机器负载不同，这不是严格对照。
+            </p>
+          </article>
+          <article>
+            <span>03 / OPEN QUESTIONS</span>
+            <h3>逐步贪心仍不等于全局最优。</h3>
+            <p>
+              稀疏天区仍有空光纤与重复曝光；值班日志的理解也未覆盖全部天气与地形语义。局限与未奏效的尝试一并记录。
             </p>
           </article>
         </div>
-      </section>
-
-      <section class="section wrap" id="lab" aria-labelledby="lab-title">
-        <div class="section-heading">
-          <div>
-            <div class="eyebrow">05 / A CLOSED-LOOP LAB</div>
-            <h2 id="lab-title">每个改动，<br />先在没见过的卡上证明自己。</h2>
-          </div>
-          <p>不只追逐公开榜单。<br />从造卡到比较，让迭代有依据。</p>
-        </div>
-        <div class="lab-intro">
-          <p>
-            用官方公开模拟器生成带天气、事件和限时请求的本地卡。真实目录配模拟天气，再加入随机站点、季节、规模与仪器配置，检验不同任务下的表现。
-          </p>
-          <a
-            class="text-link"
-            href="https://github.com/codezzzsleep/gosim26-agentic-observer/tree/main/lab"
-            >查看本地实验环境 ↗</a
-          >
-        </div>
-        <div class="lab-tiers">
-          <article>
-            <span class="tier-step">01 / QUICK</span
-            ><strong>12<small>张</small></strong>
-            <h3>快速反馈</h3>
-            <p>小卡先跑，发现明显回退与运行问题。</p>
-          </article>
-          <article>
-            <span class="tier-step">02 / TUNE</span
-            ><strong>20<small>张</small></strong>
-            <h3>主要调参</h3>
-            <p>正式规模与变体任务，比较候选方向。</p>
-          </article>
-          <article>
-            <span class="tier-step">03 / CONFIRM</span
-            ><strong>32<small>张</small></strong>
-            <h3>采纳前确认</h3>
-            <p>准备接受改动时，再检验能否泛化。</p>
-          </article>
-          <article class="sealed-tier">
-            <span class="tier-step">04 / SEALED TEST</span
-            ><strong>16<small>张</small></strong>
-            <h3>定版前封存</h3>
-            <p>保留到最终版本确定前，不用于调参。</p>
-          </article>
-        </div>
-        <div class="lab-footnote">
-          <span
-            >另有 <strong>4 张</strong>冒烟卡，共 <strong>84 张</strong>。</span
-          ><span
-            >同卡配对比较 · Bootstrap 95% 区间 · 健康检查 · 9 种假模型场景</span
-          >
-        </div>
-        <div class="lab-flow">
-          <span>冻结基线</span><b aria-hidden="true">→</b><span>改一个变量</span
-          ><b aria-hidden="true">→</b><span>跑同一批卡</span
-          ><b aria-hidden="true">→</b><span>配对比较</span
-          ><b aria-hidden="true">→</b><span>上传前把关</span>
-        </div>
-        <p class="caption">
-          本地天气与事件由模拟器生成，并非官方隐藏卡的真实天气。本地得分用于比较版本，不预测平台成绩。
-        </p>
       </section>
 
       <section
-        class="section wrap"
+        class="source-section"
         id="repository"
         aria-labelledby="repository-title"
       >
-        <div class="section-heading">
-          <div>
-            <div class="eyebrow">06 / OPEN SOURCE</div>
-            <h2 id="repository-title">比赛结束，<br />代码与方法留下来。</h2>
-          </div>
-          <div class="tech-tags">
-            <span>Python 3.10+</span><span>numpy</span><span>MIT</span>
-          </div>
-        </div>
-        <div class="repository-grid">
-          <article>
-            <div class="repo-card-top">
-              <span class="mono">agent/</span><span aria-hidden="true">↗</span>
+        <div class="wrap section">
+          <div class="source-intro">
+            <div>
+              <p class="eyebrow">05 / OPEN SOURCE</p>
+              <h2 id="repository-title">
+                比赛结束。<br /><span>探索继续。</span>
+              </h2>
             </div>
-            <h3>最终提交的智能体</h3>
             <p>
-              规划、状态跟踪、故障处理与模型客户端。保留提交包的 SHA256
-              校验记录，方便核对最终版本。
+              最终提交与本地实验工具完整公开。<br />从一次观测，到一整季的决策。
             </p>
             <a
-              class="text-link"
-              href="https://github.com/codezzzsleep/gosim26-agentic-observer/tree/main/agent"
-              >阅读代码与设计说明 ↗</a
+              class="button primary"
+              href="https://github.com/codezzzsleep/gosim26-agentic-observer"
+              >EXPLORE THE REPOSITORY <span aria-hidden="true">↗</span></a
             >
-          </article>
-          <article>
-            <div class="repo-card-top">
-              <span class="mono">lab/</span><span aria-hidden="true">↗</span>
-            </div>
-            <h3>复现实验的工具</h3>
-            <p>
-              造卡、跑分、统计比较、健康检查与上传前把关。84
-              张卡的配方与校验表一并公开。
-            </p>
-            <a
-              class="text-link"
-              href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/lab/README.md"
-              >按文档准备实验环境 ↗</a
-            >
-          </article>
-        </div>
-        <div class="clone-block">
-          <div>
-            <span class="mono">START WITH THE SOURCE</span
-            ><span id="copy-status" role="status"></span>
           </div>
-          <div class="clone-command">
-            <code id="clone-command"
-              >git clone
-              https://github.com/codezzzsleep/gosim26-agentic-observer.git</code
-            ><button
-              type="button"
-              id="copy-clone"
-              aria-label="复制 git clone 命令"
-            >
-              复制 <span aria-hidden="true">⧉</span>
-            </button>
-          </div>
-        </div>
-        <div class="project-notes">
-          <div>
-            <h4>运行需要什么</h4>
-            <p>
-              Python、numpy，以及另行获取的官方示例包与任务卡。模型密钥可选；不提供模型时自动使用规则策略。<a
-                href="https://github.com/codezzzsleep/gosim26-agentic-observer#快速开始"
-                >快速开始 ↗</a
+          <div class="repository-grid">
+            <article>
+              <span>AGENT / FINAL SUBMISSION</span>
+              <h3>最终提交的智能体</h3>
+              <p>
+                规划、状态跟踪、故障处理与模型客户端。保留提交包的 SHA256
+                校验记录。
+              </p>
+              <a
+                class="text-link"
+                href="https://github.com/codezzzsleep/gosim26-agentic-observer/tree/main/agent"
+                >代码与设计说明 ↗</a
               >
-            </p>
+            </article>
+            <article>
+              <span>LAB / REPRODUCIBLE EXPERIMENTS</span>
+              <h3>复现实验的工具</h3>
+              <p>
+                造卡、跑分、比较、健康检查与上传前把关，包含 84
+                张卡的配方和校验表。
+              </p>
+              <a
+                class="text-link"
+                href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/lab/README.md"
+                >准备实验环境 ↗</a
+              >
+            </article>
           </div>
-          <div>
-            <h4>还有哪些局限</h4>
-            <p>
-              逐步贪心与赛季定价仍不等于全局最优；稀疏天区存在空光纤与重复曝光；值班日志也未覆盖所有天气和地形语义。
-            </p>
+          <div class="clone-block">
+            <div>
+              <span>GET THE SOURCE</span
+              ><span id="copy-status" role="status"></span>
+            </div>
+            <div class="clone-command">
+              <code id="clone-command"
+                >git clone
+                https://github.com/codezzzsleep/gosim26-agentic-observer.git</code
+              ><button
+                type="button"
+                id="copy-clone"
+                aria-label="复制 git clone 命令"
+              >
+                COPY <span aria-hidden="true">⧉</span>
+              </button>
+            </div>
           </div>
+          <p class="caption">
+            运行需要 Python
+            3.10+、numpy，以及另行获取的官方示例包与任务卡。模型密钥可选。<a
+              href="https://github.com/codezzzsleep/gosim26-agentic-observer#快速开始"
+              >快速开始 ↗</a
+            >
+          </p>
         </div>
       </section>
     </main>
     <footer class="site-footer wrap">
-      <div>
-        <a class="footer-brand" href="#top">AGENTIC OBSERVER</a>
-        <p>巡天值班智能体 · team cloudbrain<br />GOSIM 2026 · 最终作品</p>
+      <div class="footer-main">
+        <a href="#top">cloudbrain <span>/ AGENTIC OBSERVER</span></a>
+        <div class="footer-links">
+          <a
+            href="https://create.gosim.org/survey26/platform/leaderboard/final-hidden"
+            >官方榜单 ↗</a
+          ><a href="https://arxiv.org/abs/2611.01988">基准论文 ↗</a
+          ><a
+            href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/PROVENANCE.md"
+            >版本记录 ↗</a
+          >
+        </div>
       </div>
-      <div class="footer-links">
-        <a href="https://github.com/codezzzsleep/gosim26-agentic-observer"
-          >GitHub ↗</a
-        ><a
-          href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/agent/PROVENANCE.md"
-          >版本记录 ↗</a
-        ><a href="https://create.gosim.org/survey26/">比赛主页 ↗</a>
+      <div class="footer-bottom">
+        <p>
+          GOSIM 2026 参赛作品 · team cloudbrain<br />本站为项目介绍页，比赛信息请以官方平台为准。
+        </p>
+        <p>
+          自写代码与文档：<a
+            href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/LICENSE"
+            >MIT</a
+          >。官方材料：<a
+            href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/NOTICE.md"
+            >CC BY-NC 4.0</a
+          >。<br />Space Grotesk / IBM Plex Mono：<a
+            href="fonts/SPACE-GROTESK-LICENSE.txt"
+            >SIL OFL</a
+          >。
+        </p>
       </div>
-      <p class="license-note">
-        本队代码与文档：<a
-          href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/LICENSE"
-          >MIT</a
-        >。官方数据与评测材料未包含在仓库中，遵循主办方
-        <a
-          href="https://github.com/codezzzsleep/gosim26-agentic-observer/blob/main/NOTICE.md"
-          >CC BY-NC 4.0 许可说明</a
-        >。
-      </p>
     </footer>
   </body>
 </html>
