@@ -4,6 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#05070d" />
+    <script>
+      (() => {
+        let saved;
+        try {
+          saved = localStorage.getItem("observer-theme");
+        } catch {}
+        document.documentElement.dataset.theme =
+          saved === "light" || saved === "dark"
+            ? saved
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+      })();
+    </script>
     <meta
       name="description"
       content="cloudbrain 的 GOSIM 2026 巡天值班智能体，决赛第 6 名。数值规划每一次曝光，大模型理解公报与日志。"
@@ -33,8 +47,8 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="style.css?v=9ebebaf25f" />
-    <script src="app.js?v=e3f5cf6dc7" defer></script>
+    <link rel="stylesheet" href="style.css?v=ab0d6e7966" />
+    <script src="app.js?v=70acb543ce" defer></script>
     <title>Agentic Observer / cloudbrain · 巡天值班智能体</title>
   </head>
   <body>
@@ -50,14 +64,43 @@
           <circle cx="18" cy="18" r="3" /></svg
         ><span>cloudbrain<small>GOSIM 2026 / 参赛作品</small></span></a
       >
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="navigation"
-      >
-        MENU <span aria-hidden="true">＋</span>
-      </button>
+      <div class="header-controls">
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="切换到亮色模式"
+        >
+          <svg
+            class="theme-sun"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"
+            />
+          </svg>
+          <svg
+            class="theme-moon"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M20 15.5A9 9 0 0 1 8.5 4 9 9 0 1 0 20 15.5Z" />
+          </svg>
+          <span id="theme-label">亮色</span>
+        </button>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="navigation"
+        >
+          MENU <span aria-hidden="true">＋</span>
+        </button>
+      </div>
       <nav id="navigation" aria-label="主要导航">
         <a href="#results">最终成绩</a><a href="#experiment">观测交互</a
         ><a href="#architecture">智能体架构</a><a href="#lab">实验方法</a

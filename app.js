@@ -77,6 +77,7 @@ function evaluate(seconds) {
   return bestPlan;
 }
 function drawField(plan) {
+  const light = document.documentElement.dataset.theme === "light";
   if (!canvas) return;
   const width = canvas.getBoundingClientRect().width;
   if (!width) return;
@@ -94,10 +95,12 @@ function drawField(plan) {
   skyStars.forEach((star) => {
     ctx.beginPath();
     ctx.arc(star.x * width, star.y * height, star.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(148,177,231,${star.opacity})`;
+    ctx.fillStyle = light
+      ? `rgba(55,92,164,${star.opacity})`
+      : `rgba(148,177,231,${star.opacity})`;
     ctx.fill();
   });
-  ctx.strokeStyle = "rgba(89,124,193,0.12)";
+  ctx.strokeStyle = light ? "rgba(55,92,164,.12)" : "rgba(89,124,193,0.12)";
   ctx.lineWidth = 1;
   for (let i = 1; i < 4; i++) {
     ctx.beginPath();
@@ -112,22 +115,22 @@ function drawField(plan) {
     );
     ctx.stroke();
   }
-  ctx.fillStyle = "rgba(5,12,30,.38)";
+  ctx.fillStyle = light ? "rgba(224,234,255,.38)" : "rgba(5,12,30,.38)";
   ctx.fillRect(left, top, size, size);
   ctx.font = `${Math.max(7, width / 78)}px ui-monospace, monospace`;
   ctx.textAlign = "center";
   for (let i = 0; i < 4; i++) {
-    ctx.fillStyle = "#8295bc";
+    ctx.fillStyle = light ? "#4c6895" : "#8295bc";
     ctx.fillText(`C${i + 1}`, left + (i + 0.5) * cellSize, top - 12);
     ctx.fillText(`R${i + 1}`, left - 18, top + (i + 0.5) * cellSize + 3);
   }
   plan.cells.forEach((selection, cell) => {
     const x = left + (cell % 4) * cellSize,
       y = top + Math.floor(cell / 4) * cellSize;
-    ctx.fillStyle = "rgba(119,162,255,.045)";
+    ctx.fillStyle = light ? "rgba(49,94,251,.045)" : "rgba(119,162,255,.045)";
     ctx.fillRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
   });
-  ctx.strokeStyle = "rgba(119,162,255,.42)";
+  ctx.strokeStyle = light ? "rgba(49,94,180,.35)" : "rgba(119,162,255,.42)";
   for (let i = 0; i <= 4; i++) {
     ctx.beginPath();
     ctx.moveTo(left + i * cellSize, top);
@@ -138,7 +141,7 @@ function drawField(plan) {
     ctx.lineTo(left + size, top + i * cellSize);
     ctx.stroke();
   }
-  ctx.strokeStyle = "#8db1ff";
+  ctx.strokeStyle = light ? "#315efb" : "#8db1ff";
   const corner = 10;
   [
     [left, top, 1, 1],
@@ -159,27 +162,36 @@ function drawField(plan) {
       radius = Math.max(1.7, width / 190) * (selected ? 1.15 : 0.75);
     if (selected) {
       const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 5);
-      glow.addColorStop(0, "rgba(119,162,255,.4)");
+      glow.addColorStop(
+        0,
+        light ? "rgba(49,94,251,.3)" : "rgba(119,162,255,.4)",
+      );
       glow.addColorStop(1, "rgba(119,162,255,0)");
       ctx.fillStyle = glow;
       ctx.beginPath();
       ctx.arc(x, y, radius * 5, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = "rgba(119,162,255,.65)";
+      ctx.strokeStyle = light ? "rgba(49,94,251,.7)" : "rgba(119,162,255,.65)";
       ctx.beginPath();
       ctx.arc(x, y, radius * 2.8, 0, Math.PI * 2);
       ctx.stroke();
     }
     ctx.fillStyle = selected
-      ? "#deebff"
+      ? light
+        ? "#315efb"
+        : "#deebff"
       : target.best >= 1.45
-        ? "#50607b"
-        : "#a8bcdf";
+        ? light
+          ? "#98aac5"
+          : "#50607b"
+        : light
+          ? "#4d6a98"
+          : "#a8bcdf";
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
   });
-  ctx.fillStyle = "#8295bc";
+  ctx.fillStyle = light ? "#4c6895" : "#8295bc";
   ctx.font = `${Math.max(7, width / 90)}px ui-monospace, monospace`;
   ctx.fillText("FIXED FIELD / ONE TARGET PER FIBRE", width / 2, height - 12);
 }
@@ -282,6 +294,7 @@ function canvasContext(element) {
   return { ctx, width: bounds.width, height: bounds.height };
 }
 function drawSkyBackground() {
+  const light = document.documentElement.dataset.theme === "light";
   const surface = canvasContext(skyBackground);
   if (!surface) return;
   const { ctx, width, height } = surface;
@@ -293,28 +306,34 @@ function drawSkyBackground() {
     height * 0.47,
     width * 0.5,
   );
-  glow.addColorStop(0, "rgba(30,67,170,.24)");
-  glow.addColorStop(0.5, "rgba(25,39,101,.12)");
+  glow.addColorStop(0, light ? "rgba(91,134,255,.14)" : "rgba(30,67,170,.24)");
+  glow.addColorStop(
+    0.5,
+    light ? "rgba(119,154,244,.08)" : "rgba(25,39,101,.12)",
+  );
   glow.addColorStop(1, "rgba(5,7,13,0)");
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, width, height);
   backgroundPoints.forEach((point) => {
     ctx.beginPath();
     ctx.arc(point.x * width, point.y * height, point.r, 0, Math.PI * 2);
-    ctx.fillStyle = point.pale
-      ? `rgba(202,218,255,${point.opacity})`
-      : `rgba(70,114,239,${point.opacity})`;
+    ctx.fillStyle = light
+      ? `rgba(63,98,177,${point.opacity})`
+      : point.pale
+        ? `rgba(202,218,255,${point.opacity})`
+        : `rgba(70,114,239,${point.opacity})`;
     ctx.fill();
   });
 }
 function drawHeroMap() {
+  const light = document.documentElement.dataset.theme === "light";
   const surface = canvasContext(heroMap);
   if (!surface) return;
   const { ctx, width, height } = surface;
   const cx = width / 2,
     cy = height / 2,
     radius = Math.min(width * 0.42, height * 0.44);
-  ctx.strokeStyle = "rgba(104,135,197,.2)";
+  ctx.strokeStyle = light ? "rgba(53,88,150,.18)" : "rgba(104,135,197,.2)";
   ctx.lineWidth = 0.65;
   for (let ring = 1; ring <= 4; ring++) {
     ctx.beginPath();
@@ -328,7 +347,7 @@ function drawHeroMap() {
     ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
     ctx.stroke();
   }
-  ctx.strokeStyle = "rgba(113,151,229,.4)";
+  ctx.strokeStyle = light ? "rgba(53,88,150,.4)" : "rgba(113,151,229,.4)";
   for (let tick = 0; tick < 72; tick++) {
     const angle = (tick * Math.PI) / 36,
       inside = radius - (tick % 6 === 0 ? 6 : 2.5);
@@ -340,7 +359,7 @@ function drawHeroMap() {
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.font = `${Math.max(7, width / 65)}px "IBM Plex Mono",monospace`;
-  ctx.fillStyle = "#90a7cf";
+  ctx.fillStyle = light ? "#42648f" : "#90a7cf";
   [
     ["N", 0, -1],
     ["E", 1, 0],
@@ -359,7 +378,13 @@ function drawHeroMap() {
       ctx.arc(x, y, r * 4, 0, Math.PI * 2);
       ctx.fill();
     }
-    ctx.fillStyle = point.required ? "#ffd078" : "rgba(126,166,244,.65)";
+    ctx.fillStyle = point.required
+      ? light
+        ? "#9e6817"
+        : "#ffd078"
+      : light
+        ? "rgba(57,96,176,.6)"
+        : "rgba(126,166,244,.65)";
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fill();
@@ -370,10 +395,10 @@ function drawHeroMap() {
   ctx.rotate(-Math.PI / 10);
   ctx.fillStyle = "rgba(61,101,230,.12)";
   ctx.fillRect(-fieldSize / 2, -fieldSize / 2, fieldSize, fieldSize);
-  ctx.strokeStyle = "rgba(209,229,255,.85)";
+  ctx.strokeStyle = light ? "rgba(34,66,128,.85)" : "rgba(209,229,255,.85)";
   ctx.lineWidth = 0.7;
   ctx.strokeRect(-fieldSize / 2, -fieldSize / 2, fieldSize, fieldSize);
-  ctx.strokeStyle = "rgba(177,208,255,.4)";
+  ctx.strokeStyle = light ? "rgba(54,93,171,.4)" : "rgba(177,208,255,.4)";
   for (let i = 1; i < 4; i++) {
     const v = -fieldSize / 2 + (i * fieldSize) / 4;
     ctx.beginPath();
@@ -385,7 +410,7 @@ function drawHeroMap() {
   }
   for (let row = 0; row < 4; row++)
     for (let col = 0; col < 4; col++) {
-      ctx.fillStyle = "#e8f1ff";
+      ctx.fillStyle = light ? "#274c9a" : "#e8f1ff";
       ctx.beginPath();
       ctx.arc(
         -fieldSize / 2 + ((col + 0.5) * fieldSize) / 4,
@@ -397,7 +422,7 @@ function drawHeroMap() {
       ctx.fill();
     }
   ctx.restore();
-  ctx.strokeStyle = "rgba(181,209,255,.6)";
+  ctx.strokeStyle = light ? "rgba(54,93,171,.6)" : "rgba(181,209,255,.6)";
   ctx.beginPath();
   ctx.moveTo(cx - 6, cy);
   ctx.lineTo(cx + 6, cy);
@@ -423,6 +448,45 @@ function updateScrollProgress() {
 window.addEventListener("scroll", updateScrollProgress, { passive: true });
 window.addEventListener("resize", updateScrollProgress);
 updateScrollProgress();
+
+// System theme by default, with a persistent per-browser choice.
+const themePreference = matchMedia("(prefers-color-scheme: dark)");
+let themeOverridden = false;
+try {
+  themeOverridden = ["light", "dark"].includes(
+    localStorage.getItem("observer-theme"),
+  );
+} catch {}
+function applyTheme(theme, save = false) {
+  document.documentElement.dataset.theme = theme;
+  const destination = theme === "dark" ? "亮色" : "暗色";
+  document.querySelector("#theme-label").textContent = destination;
+  document
+    .querySelector("#theme-toggle")
+    .setAttribute("aria-label", `切换到${destination}模式`);
+  document.querySelector('meta[name="theme-color"]').content =
+    theme === "dark" ? "#05070d" : "#f8faff";
+  if (save) {
+    themeOverridden = true;
+    try {
+      localStorage.setItem("observer-theme", theme);
+    } catch {}
+  }
+  redrawSky();
+  drawField(evaluate(Number(durationInput.value)));
+}
+document
+  .querySelector("#theme-toggle")
+  .addEventListener("click", () =>
+    applyTheme(
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark",
+      true,
+    ),
+  );
+themePreference.addEventListener("change", (event) => {
+  if (!themeOverridden) applyTheme(event.matches ? "dark" : "light");
+});
+applyTheme(document.documentElement.dataset.theme);
 
 // WAI-ARIA tabs: keyboard navigation, a single tab stop and paired panels.
 const tabs = [...document.querySelectorAll('[role="tab"]')];
