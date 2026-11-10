@@ -9,7 +9,7 @@
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![deps](https://img.shields.io/badge/dependency-numpy%20only-lightgrey)
 
-[最终提交](agent/) · [设计说明](agent/README.md) · [本地实验环境](lab/README.md) · [比赛主页](https://create.gosim.org/survey26/)
+[项目展示](https://codezzzsleep.github.io/gosim26-agentic-observer/) · [最终提交](agent/) · [设计说明](agent/README.md) · [本地实验环境](lab/README.md) · [官方最终榜单](https://create.gosim.org/survey26/platform/leaderboard/final-hidden)
 
 </div>
 
@@ -180,11 +180,13 @@ lab/                   本地闭环实验环境（默认测试上面的 agent/�
   cards/SETS.json      84 张本地卡的配方（卡本身由工具生成，不在仓库里）
   cards/CHECKSUMS.json 造出的卡的校验和
 assets/                README 里的流程图：浅色 / 深色 PNG 及其 SVG 源文件
+site/                  GitHub Pages 中文项目展示与交互原理示意
+ops/publish_pages.sh   将已提交的 site/ 发布到 gh-pages 分支
 ```
 
 ## 文档
 
-[设计说明](agent/README.md) · [最终版改动记录](agent/PROVENANCE.md) · [实验环境](lab/README.md) · [第三方材料](NOTICE.md)
+[设计说明](agent/README.md) · [最终版改动记录](agent/PROVENANCE.md) · [实验环境](lab/README.md) · [展示页维护与部署](docs/website.md) · [第三方材料](NOTICE.md)
 
 ## 许可与引用
 
