@@ -2592,3 +2592,197 @@ html[data-theme="light"] .footer-bottom p {
     font-size: 31px;
   }
 }
+/* Lead with the award while preserving the survey project's own visual identity. */
+:root {
+  --award: #f1ca89;
+  --award-border: #bd92545c;
+  --award-surface: #dca34b10;
+}
+html[data-theme="light"] {
+  --award: #855510;
+  --award-border: #b8883b70;
+  --award-surface: #fff3dc;
+}
+.award-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+  padding: 13px 17px;
+  border: 1px solid var(--award-border);
+  background: var(--award-surface);
+  color: var(--award);
+  margin-bottom: 25px;
+  box-shadow: 0 6px 30px #d39c4210;
+  transition:
+    border-color 0.18s,
+    background 0.18s;
+}
+.award-banner:hover {
+  border-color: var(--award);
+  background: #dca34b1c;
+}
+.award-banner > svg {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.award-copy {
+  min-width: 0;
+}
+.award-copy strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+.award-copy > span {
+  display: block;
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--award);
+  opacity: 0.9;
+  margin-top: 3px;
+}
+.award-arrow {
+  margin-left: 7px;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+.hero-copy > .award-banner + .eyebrow {
+  margin-bottom: 19px;
+  font-size: 9px;
+}
+.hero .hero-chinese {
+  color: var(--award);
+}
+.award-result-cell {
+  background: linear-gradient(120deg, #dca34b1b, #dca34b05);
+}
+.award-result-cell .award-grade {
+  font-size: 34px;
+  line-height: 1.4;
+  color: var(--award);
+  letter-spacing: 0.02em;
+  margin: 14px 0 11px;
+  font-weight: 500;
+}
+.award-result-cell .award-rank {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.award-rank b {
+  font-weight: 500;
+  color: var(--ink);
+  margin-left: 5px;
+}
+.award-result-cell > .mono {
+  color: var(--award);
+  font-size: 7px;
+  letter-spacing: 0.07em;
+}
+html[data-theme="light"] .award-result-cell {
+  background: linear-gradient(120deg, #fff0d2, #fff8eb);
+}
+@media (max-width: 1100px) {
+  .award-banner {
+    gap: 11px;
+    padding: 12px 14px;
+  }
+  .award-copy strong {
+    font-size: 15px;
+  }
+  .award-copy > span {
+    font-size: 9px;
+  }
+  .award-arrow {
+    margin-left: 2px;
+  }
+  .award-result-cell .award-grade {
+    font-size: 30px;
+  }
+}
+@media (max-width: 850px) {
+  .award-banner > svg {
+    width: 29px;
+    height: 29px;
+  }
+  .award-copy strong {
+    font-size: 13px;
+  }
+  .award-copy > span {
+    font-size: 8px;
+  }
+  .award-banner {
+    gap: 10px;
+    padding: 11px 12px;
+  }
+  .award-arrow {
+    font-size: 15px;
+    margin-left: 0;
+  }
+  .award-result-cell .award-grade {
+    font-size: 32px;
+  }
+}
+@media (max-width: 680px) {
+  .award-banner {
+    margin-bottom: 25px;
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  .award-copy strong {
+    font-size: 14px;
+  }
+  .award-copy > span {
+    font-size: 9px;
+  }
+  .award-banner > svg {
+    width: 31px;
+    height: 31px;
+  }
+  .hero-copy > .award-banner + .eyebrow {
+    font-size: 8px;
+    margin-bottom: 20px;
+  }
+  .award-result-cell .award-grade {
+    font-size: 28px;
+  }
+  .award-result-cell > .mono {
+    font-size: 6px;
+  }
+  .award-result-cell .award-rank {
+    font-size: 10px;
+  }
+}
+@media (max-width: 380px) {
+  .award-banner {
+    padding: 10px 11px;
+    gap: 10px;
+  }
+  .award-copy strong {
+    font-size: 12px;
+  }
+  .award-copy > span {
+    font-size: 8px;
+  }
+  .award-banner > svg {
+    width: 28px;
+    height: 28px;
+  }
+  .award-arrow {
+    font-size: 14px;
+  }
+  .award-result-cell .award-grade {
+    font-size: 24px;
+  }
+  .award-result-cell .award-rank {
+    font-size: 9px;
+  }
+}
