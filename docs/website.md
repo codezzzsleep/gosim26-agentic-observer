@@ -22,6 +22,8 @@ python3 -m http.server 8000 --directory site
 - `site/favicon.svg`：站点图标。
 - `site/fonts/`：本地托管的 Space Grotesk 与 IBM Plex Mono，附 SIL OFL 许可。
 
+更新样式、脚本或图标后，同步更新 `index.html` 中相应资源 URL 的 `?v=` 版本标记，以避免旧资源缓存。
+
 成绩以 [官方最终榜单](https://create.gosim.org/survey26/platform/leaderboard/final-hidden) 为来源。实验方法与本地验证记录来自仓库 README、`agent/README.md` 和 `lab/README.md`。
 
 交互观测使用确定性生成的 4×4 示例星场，每格四个目标；根据示例天气、曝光时长与既有成绩，比较程序和每格的最佳分配。自动选择时长采用固定的示例时间价格。它用于解释“一根光纤一个目标”和“只保留最好的一次曝光”，没有调用实际 Python 规划器，也不代表比赛回放或成绩预测。
