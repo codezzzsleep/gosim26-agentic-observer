@@ -4,6 +4,7 @@
 
 **每一次曝光交给数值规划，每一段文字交给大模型；每个改动先在没见过的卡上证明自己。**
 
+![award](https://img.shields.io/badge/GOSIM_2026-Third_Prize-b68b42)
 ![final](https://img.shields.io/badge/final-6th%20%C2%B7%2031%2C680-2f6feb)
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
@@ -13,7 +14,7 @@
 
 </div>
 
-GOSIM 2026 Agentic Observer Hackathon 参赛作品，队伍 cloudbrain，决赛（隐藏任务卡 E–H）第 6 名。
+GOSIM 2026 Agentic Observer Hackathon 决赛三等奖获奖作品，队伍 cloudbrain，隐藏任务卡 E–H 最终第 6 名。
 智能体在模拟的光纤光谱巡天里当值班天文学家：每一步决定望远镜指向哪里、每根光纤分给哪个目标、曝光多久、用哪个观测程序，
 同时读公报和值班日志、判断仪器故障，并在 CPU 预算和真实时间上限之内跑完整个赛季。
 
@@ -212,7 +213,7 @@ ops/publish_pages.sh   将已提交的 site/ 发布到 gh-pages 分支
 <details>
 <summary>English summary</summary>
 
-Entry of team cloudbrain to the GOSIM 2026 Agentic Observer Hackathon; 6th place in the final round (hidden cards E–H, total 31,680).
+Entry of team cloudbrain to the GOSIM 2026 Agentic Observer Hackathon, awarded a Third Prize; 6th place in the final round (hidden cards E–H, total 31,680).
 
 **Idea.** Only unseen cards count, so every change had to win on a set of locally simulated cards unrelated to the public ones.
 Only the best exposure of a target counts, so the planner prices fibre time over the whole season instead of maximising each step.
