@@ -2,7 +2,7 @@
 
 线上地址：<https://codezzzsleep.github.io/gosim26-agentic-observer/>
 
-`site/` 是独立的静态站点，使用 HTML、CSS、JavaScript 和内联 SVG，无构建步骤、第三方前端依赖或模型请求。页面介绍最终参赛作品，采用比赛官网的近黑底色、电蓝强调、Space Grotesk 标题与观测坐标语言。首屏展示示意星场与观测面板，成绩来自官方最终榜单。
+`site/` 是独立的静态站点，使用 HTML、CSS、JavaScript 和内联 SVG，无构建步骤、第三方前端依赖或模型请求。页面介绍最终参赛作品，采用比赛官网的近黑底色、电蓝强调、Space Grotesk 标题与观测坐标语言。首屏展示示意星场与观测面板，成绩来自官方最终榜单。支持亮色与暗色，默认跟随系统外观；导航中的主题按钮可切换并通过 localStorage 记住选择。坐标图与光纤图随主题重绘。
 
 ## 本地预览
 
