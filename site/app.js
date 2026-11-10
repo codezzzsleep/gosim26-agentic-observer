@@ -94,10 +94,10 @@ function drawField(plan) {
   skyStars.forEach((star) => {
     ctx.beginPath();
     ctx.arc(star.x * width, star.y * height, star.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(161,188,193,${star.opacity})`;
+    ctx.fillStyle = `rgba(148,177,231,${star.opacity})`;
     ctx.fill();
   });
-  ctx.strokeStyle = "rgba(102,143,147,0.11)";
+  ctx.strokeStyle = "rgba(89,124,193,0.12)";
   ctx.lineWidth = 1;
   for (let i = 1; i < 4; i++) {
     ctx.beginPath();
@@ -112,22 +112,22 @@ function drawField(plan) {
     );
     ctx.stroke();
   }
-  ctx.fillStyle = "rgba(7,20,24,.38)";
+  ctx.fillStyle = "rgba(5,12,30,.38)";
   ctx.fillRect(left, top, size, size);
   ctx.font = `${Math.max(7, width / 78)}px ui-monospace, monospace`;
   ctx.textAlign = "center";
   for (let i = 0; i < 4; i++) {
-    ctx.fillStyle = "#69848a";
+    ctx.fillStyle = "#8295bc";
     ctx.fillText(`C${i + 1}`, left + (i + 0.5) * cellSize, top - 12);
     ctx.fillText(`R${i + 1}`, left - 18, top + (i + 0.5) * cellSize + 3);
   }
   plan.cells.forEach((selection, cell) => {
     const x = left + (cell % 4) * cellSize,
       y = top + Math.floor(cell / 4) * cellSize;
-    ctx.fillStyle = "rgba(121,223,184,.045)";
+    ctx.fillStyle = "rgba(119,162,255,.045)";
     ctx.fillRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
   });
-  ctx.strokeStyle = "rgba(121,223,184,.42)";
+  ctx.strokeStyle = "rgba(119,162,255,.42)";
   for (let i = 0; i <= 4; i++) {
     ctx.beginPath();
     ctx.moveTo(left + i * cellSize, top);
@@ -138,7 +138,7 @@ function drawField(plan) {
     ctx.lineTo(left + size, top + i * cellSize);
     ctx.stroke();
   }
-  ctx.strokeStyle = "#79dfb8";
+  ctx.strokeStyle = "#8db1ff";
   const corner = 10;
   [
     [left, top, 1, 1],
@@ -159,27 +159,27 @@ function drawField(plan) {
       radius = Math.max(1.7, width / 190) * (selected ? 1.15 : 0.75);
     if (selected) {
       const glow = ctx.createRadialGradient(x, y, 0, x, y, radius * 5);
-      glow.addColorStop(0, "rgba(121,223,184,.4)");
-      glow.addColorStop(1, "rgba(121,223,184,0)");
+      glow.addColorStop(0, "rgba(119,162,255,.4)");
+      glow.addColorStop(1, "rgba(119,162,255,0)");
       ctx.fillStyle = glow;
       ctx.beginPath();
       ctx.arc(x, y, radius * 5, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = "rgba(121,223,184,.65)";
+      ctx.strokeStyle = "rgba(119,162,255,.65)";
       ctx.beginPath();
       ctx.arc(x, y, radius * 2.8, 0, Math.PI * 2);
       ctx.stroke();
     }
     ctx.fillStyle = selected
-      ? "#a6f3d3"
+      ? "#deebff"
       : target.best >= 1.45
-        ? "#4b6066"
-        : "#9db1b9";
+        ? "#50607b"
+        : "#a8bcdf";
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.fill();
   });
-  ctx.fillStyle = "#6e8b90";
+  ctx.fillStyle = "#8295bc";
   ctx.font = `${Math.max(7, width / 90)}px ui-monospace, monospace`;
   ctx.fillText("FIXED FIELD / ONE TARGET PER FIBRE", width / 2, height - 12);
 }
@@ -241,15 +241,188 @@ else
   );
 updateDemo();
 
-const heroStars = document.querySelector("#hero-stars");
-for (let i = 0; i < 100; i++) {
-  const star = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  star.setAttribute("cx", String(70 + random() * 490));
-  star.setAttribute("cy", String(70 + random() * 410));
-  star.setAttribute("r", String(0.5 + random() * 1.3));
-  star.setAttribute("opacity", String(0.2 + random() * 0.55));
-  heroStars.appendChild(star);
+// Decorative sky and instrument coordinates use their own deterministic catalogue.
+// No animation loop or live measurements: both canvases redraw only on resize.
+const skyBackground = document.querySelector("#sky-background");
+const heroMap = document.querySelector("#hero-map");
+function normal() {
+  return (random() + random() + random() + random() - 2) / 2;
 }
+const backgroundPoints = Array.from({ length: 3400 }, (_, i) => {
+  const radius = Math.sqrt(random()) * 0.53;
+  const angle = ((i % 3) * Math.PI * 2) / 3 + radius * 12 + normal() * 1.25;
+  return {
+    x: 0.75 + Math.cos(angle) * radius * 0.75,
+    y: 0.5 + Math.sin(angle) * radius,
+    r: 0.3 + random() * 1.4,
+    opacity: 0.08 + random() * 0.55,
+    pale: random() > 0.87,
+  };
+});
+const mapPoints = Array.from({ length: 530 }, (_, i) => {
+  const r = Math.sqrt(random()) * 0.95,
+    a = random() * Math.PI * 2;
+  return {
+    x: Math.cos(a) * r,
+    y: Math.sin(a) * r,
+    radius: 0.5 + random() * 1.15,
+    required: i % 37 === 0,
+  };
+});
+function canvasContext(element) {
+  if (!element) return null;
+  const bounds = element.getBoundingClientRect();
+  if (!bounds.width || !bounds.height) return null;
+  const ratio = Math.min(devicePixelRatio || 1, 2);
+  element.width = Math.round(bounds.width * ratio);
+  element.height = Math.round(bounds.height * ratio);
+  const ctx = element.getContext("2d");
+  if (!ctx) return null;
+  ctx.scale(ratio, ratio);
+  return { ctx, width: bounds.width, height: bounds.height };
+}
+function drawSkyBackground() {
+  const surface = canvasContext(skyBackground);
+  if (!surface) return;
+  const { ctx, width, height } = surface;
+  const glow = ctx.createRadialGradient(
+    width * 0.76,
+    height * 0.47,
+    0,
+    width * 0.76,
+    height * 0.47,
+    width * 0.5,
+  );
+  glow.addColorStop(0, "rgba(30,67,170,.24)");
+  glow.addColorStop(0.5, "rgba(25,39,101,.12)");
+  glow.addColorStop(1, "rgba(5,7,13,0)");
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, width, height);
+  backgroundPoints.forEach((point) => {
+    ctx.beginPath();
+    ctx.arc(point.x * width, point.y * height, point.r, 0, Math.PI * 2);
+    ctx.fillStyle = point.pale
+      ? `rgba(202,218,255,${point.opacity})`
+      : `rgba(70,114,239,${point.opacity})`;
+    ctx.fill();
+  });
+}
+function drawHeroMap() {
+  const surface = canvasContext(heroMap);
+  if (!surface) return;
+  const { ctx, width, height } = surface;
+  const cx = width / 2,
+    cy = height / 2,
+    radius = Math.min(width * 0.42, height * 0.44);
+  ctx.strokeStyle = "rgba(104,135,197,.2)";
+  ctx.lineWidth = 0.65;
+  for (let ring = 1; ring <= 4; ring++) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, (radius * ring) / 4, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  for (let line = 0; line < 12; line++) {
+    const angle = (line * Math.PI) / 6;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
+    ctx.stroke();
+  }
+  ctx.strokeStyle = "rgba(113,151,229,.4)";
+  for (let tick = 0; tick < 72; tick++) {
+    const angle = (tick * Math.PI) / 36,
+      inside = radius - (tick % 6 === 0 ? 6 : 2.5);
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(angle) * inside, cy + Math.sin(angle) * inside);
+    ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
+    ctx.stroke();
+  }
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = `${Math.max(7, width / 65)}px "IBM Plex Mono",monospace`;
+  ctx.fillStyle = "#90a7cf";
+  [
+    ["N", 0, -1],
+    ["E", 1, 0],
+    ["S", 0, 1],
+    ["W", -1, 0],
+  ].forEach(([name, x, y]) =>
+    ctx.fillText(name, cx + x * (radius + 13), cy + y * (radius + 13)),
+  );
+  mapPoints.forEach((point) => {
+    const x = cx + point.x * radius,
+      y = cy + point.y * radius,
+      r = point.radius * Math.max(0.8, width / 570);
+    if (point.required) {
+      ctx.fillStyle = "rgba(255,208,120,.1)";
+      ctx.beginPath();
+      ctx.arc(x, y, r * 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.fillStyle = point.required ? "#ffd078" : "rgba(126,166,244,.65)";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  const fieldSize = radius * 0.45;
+  ctx.save();
+  ctx.translate(cx + radius * 0.26, cy - radius * 0.25);
+  ctx.rotate(-Math.PI / 10);
+  ctx.fillStyle = "rgba(61,101,230,.12)";
+  ctx.fillRect(-fieldSize / 2, -fieldSize / 2, fieldSize, fieldSize);
+  ctx.strokeStyle = "rgba(209,229,255,.85)";
+  ctx.lineWidth = 0.7;
+  ctx.strokeRect(-fieldSize / 2, -fieldSize / 2, fieldSize, fieldSize);
+  ctx.strokeStyle = "rgba(177,208,255,.4)";
+  for (let i = 1; i < 4; i++) {
+    const v = -fieldSize / 2 + (i * fieldSize) / 4;
+    ctx.beginPath();
+    ctx.moveTo(v, -fieldSize / 2);
+    ctx.lineTo(v, fieldSize / 2);
+    ctx.moveTo(-fieldSize / 2, v);
+    ctx.lineTo(fieldSize / 2, v);
+    ctx.stroke();
+  }
+  for (let row = 0; row < 4; row++)
+    for (let col = 0; col < 4; col++) {
+      ctx.fillStyle = "#e8f1ff";
+      ctx.beginPath();
+      ctx.arc(
+        -fieldSize / 2 + ((col + 0.5) * fieldSize) / 4,
+        -fieldSize / 2 + ((row + 0.5) * fieldSize) / 4,
+        Math.max(1, width / 320),
+        0,
+        Math.PI * 2,
+      );
+      ctx.fill();
+    }
+  ctx.restore();
+  ctx.strokeStyle = "rgba(181,209,255,.6)";
+  ctx.beginPath();
+  ctx.moveTo(cx - 6, cy);
+  ctx.lineTo(cx + 6, cy);
+  ctx.moveTo(cx, cy - 6);
+  ctx.lineTo(cx, cy + 6);
+  ctx.stroke();
+}
+function redrawSky() {
+  drawSkyBackground();
+  drawHeroMap();
+}
+if (typeof ResizeObserver !== "undefined") {
+  const skyResize = new ResizeObserver(redrawSky);
+  skyResize.observe(skyBackground);
+  skyResize.observe(heroMap);
+} else window.addEventListener("resize", redrawSky);
+redrawSky();
+function updateScrollProgress() {
+  const extent = document.documentElement.scrollHeight - innerHeight;
+  document.querySelector("#scroll-progress").style.transform =
+    `scaleX(${extent > 0 ? scrollY / extent : 0})`;
+}
+window.addEventListener("scroll", updateScrollProgress, { passive: true });
+window.addEventListener("resize", updateScrollProgress);
+updateScrollProgress();
 
 // WAI-ARIA tabs: keyboard navigation, a single tab stop and paired panels.
 const tabs = [...document.querySelectorAll('[role="tab"]')];

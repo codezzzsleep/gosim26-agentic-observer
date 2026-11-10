@@ -17,6 +17,9 @@
 
 比赛规则（第 9 节）：选手自己编写的代码不受上述许可限制。
 
+展示页的 Space Grotesk 与 IBM Plex Mono 字体通过 Fontsource 获取，采用 SIL Open Font License 1.1。
+字体文件与各自的完整版权、许可文本保存在 `site/fonts/`，不适用本项目的 MIT 许可。
+
 ---
 
 The code and documentation in this repository were written by the team and are released under the MIT License.
@@ -24,3 +27,6 @@ The organizers' materials ([CC BY-NC 4.0](https://creativecommons.org/licenses/b
 data, and the platform pages — are not included. Some tools under `lab/tools/` import the official repository at run
 time; obtain it separately and follow its license. `lab/cards/SETS.json` holds recipes (seeds and parameters) only. Cite GOSIM 2026 Agentic Observer Hackathon
 (https://create.gosim.org/survey26/), or the organizers' paper on the benchmark once it is published.
+
+The showcase includes Space Grotesk and IBM Plex Mono obtained from Fontsource under the SIL Open Font License 1.1.
+Font files and their respective copyright and license texts are preserved in `site/fonts/`.

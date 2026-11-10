@@ -2,7 +2,7 @@
 
 线上地址：<https://codezzzsleep.github.io/gosim26-agentic-observer/>
 
-`site/` 是独立的静态站点，使用 HTML、CSS、JavaScript 和内联 SVG，无构建步骤、第三方前端依赖或模型请求。页面介绍最终参赛作品，参考 Next Zenith 展示站的深色视觉与按实验展开的叙事。
+`site/` 是独立的静态站点，使用 HTML、CSS、JavaScript 和内联 SVG，无构建步骤、第三方前端依赖或模型请求。页面介绍最终参赛作品，采用比赛官网的近黑底色、电蓝强调、Space Grotesk 标题与观测坐标语言。首屏展示示意星场与观测面板，成绩来自官方最终榜单。
 
 ## 本地预览
 
@@ -20,6 +20,7 @@ python3 -m http.server 8000 --directory site
 - `site/style.css`：桌面、平板与手机样式。
 - `site/app.js`：固定星场的观测示意、模块切换、手机导航与复制命令。
 - `site/favicon.svg`：站点图标。
+- `site/fonts/`：本地托管的 Space Grotesk 与 IBM Plex Mono，附 SIL OFL 许可。
 
 成绩以 [官方最终榜单](https://create.gosim.org/survey26/platform/leaderboard/final-hidden) 为来源。实验方法与本地验证记录来自仓库 README、`agent/README.md` 和 `lab/README.md`。
 
@@ -27,7 +28,7 @@ python3 -m http.server 8000 --directory site
 
 ## 发布
 
-与参考仓库相同，GitHub Pages 从 `gh-pages` 分支的根目录发布。该分支只包含 `site/` 的内容，`.nojekyll` 禁用 Jekyll；智能体、实验工具、环境配置和其他源码不进入站点部署目录。
+GitHub Pages 从 `gh-pages` 分支的根目录发布。该分支只包含 `site/` 的内容，`.nojekyll` 禁用 Jekyll；智能体、实验工具、环境配置和其他源码不进入站点部署目录。
 
 先提交修改，再从仓库根目录运行：
 
